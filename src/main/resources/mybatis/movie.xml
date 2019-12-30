@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.mvc.movie.MovieDAOInter">
+
+  <insert id="create" parameterType="MovieVO">
+    INSERT INTO moviegrp(movieno, movie)
+    VALUES((SELECT NVL(MAX(movieno), 0) + 1 as movieno FROM moviegrp),
+                #{movie})
+  </insert>
+
+  <select id="list" resultType="MovieVO">
+    SELECT movieno, movie
+    FROM moviegrp
+    ORDER BY movieno ASC
+  </select>
+  
+  <select id="read" resultType="MovieVO" parameterType="int">
+    SELECT movieno, movie
+    FROM moviegrp
+    WHERE movieno = #{movieno}
+  </select> 
+  
+  <update id="update" parameterType="MovieVO">
+    UPDATE moviegrp
+    SET movie=#{movie}
+    WHERE movieno = #{movieno}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM moviegrp
+    WHERE movieno = #{movieno}
+  </delete>
+
+</mapper> 
