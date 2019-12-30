@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="dev.mvc.customgrp.CustomgrpDAOInter">  
+   
+   <insert id="create" parameterType="CustomgrpVO">
+      INSERT INTO customgrp(customgrpno, name, seqno, visible, rdate)
+      VALUES((SELECT NVL(MAX(customgrpno), 0) + 1 as customgrpno FROM customgrp),
+                  #{name}, #{seqno}, #{visible}, sysdate)
+   </insert>   
+   
+   <select id="list" resultType ="CustomgrpVO">   
+    SELECT customgrpno, name, seqno, visible, TO_CHAR(rdate, 'YYYY-MM-DD hh:mi:ss') as rdate
+    FROM customgrp
+    ORDER BY customgrpno ASC
+   </select>
+   
+   <select id="read" resultType="CustomgrpVO" parameterType="int">
+     SELECT customgrpno, name, seqno, visible, rdate 
+     FROM customgrp
+     WHERE customgrpno = #{customgrpno}
+   </select>
+   
+   <update id="update" parameterType="CustomgrpVO">
+     UPDATE customgrp
+     SET name=#{name}, seqno=#{seqno}, visible=#{visible}
+     WHERE customgrpno = #{customgrpno}
+   </update>
+       
+   <delete id="delete" parameterType="int">
+      DELETE FROM customgrp
+      WHERE customgrpno = #{customgrpno}
+   </delete>
+    
+    
+</mapper> 
+
+
+
+
+
+
+

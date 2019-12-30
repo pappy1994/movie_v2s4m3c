@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace = "dev.mvc.members.MembersDAOInter">
+  <select id="checkId" resultType="int" parameterType="String">
+    SELECT COUNT(id) as cnt
+    FROM members
+    WHERE id=#{id}
+  </select>
+  
+  <insert id="create" parameterType="membersVO">
+    INSERT INTO members(mno,
+                       id, passwd, mname, tel, zipcode,
+                       address1, address2, mdate)
+    VALUES ((SELECT NVL(MAX(mno), 0)+1 as mno FROM members),
+              #{id}, #{passwd}, #{mname}, #{tel}, #{zipcode},
+              #{address1}, #{address2}, sysdate)
+  </insert>
+  
+  <select id="list" resultType="membersVO">
+    SELECT mno, id, passwd, mname, tel, zipcode, address1, address2, mdate
+    FROM members
+    ORDER BY mno ASC
+  </select>
+  
+  <select id="read"  resultType="membersVO" parameterType="int">
+    SELECT mno, id, passwd, mname, tel, zipcode, address1, address2, mdate
+    FROM members
+    WHERE mno = #{mno}
+  </select>
+
+  <select id="readById" resultType="membersVO" parameterType="String">
+    SELECT mno, id, passwd, mname, tel, zipcode, address1, address2, mdate
+    FROM members
+    WHERE id = #{id}
+  </select>
+  
+  <update id="update" parameterType="membersVO">
+    UPDATE members 
+    SET mname=#{mname}, tel=#{tel}, zipcode=#{zipcode},
+          address1=#{address1}, address2=#{address2}
+    WHERE mno=#{mno}
+  </update>
+  
+  <select id="passwd_check" resultType="int" parameterType="HashMap">
+    SELECT COUNT(mno) as cnt
+    FROM members
+    WHERE mno=#{mno} AND passwd=#{passwd}
+  </select>
+  
+  <update id="passwd_update" parameterType="HashMap">
+    UPDATE members
+    SET passwd=#{passwd}
+    WHERE mno=#{mno}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM members
+    WHERE mno=#{mno}
+  </delete>
+  
+  <select id="login" resultType="int" parameterType="Map">
+    SELECT COUNT(mno) as cnt
+    FROM members
+    WHERE id=#{id} AND passwd=#{passwd}
+  </select>
+
+</mapper> 
+ 
+ 
+ 
+ 
+ 
+ 
