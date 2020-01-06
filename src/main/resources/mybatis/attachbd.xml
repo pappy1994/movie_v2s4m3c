@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "dev.mvc.attachbd.AttachbdDAOInter">
+
+  <insert id="create" parameterType="AttachbdVO">
+    INSERT INTO attachbd(attachbdno, contentsbdno, aname, aupname, athumb, asize, rdate)
+    VALUES((SELECT NVL(MAX(attachbdno), 0) + 1 as attachbdno FROM attachbd),
+                 #{contentsbdno}, #{aname}, #{aupname}, #{athumb}, #{asize}, sysdate)
+  </insert>
+  
+  <select id="list" resultType="Contentsbd_AttachbdVO">
+    SELECT c.title, 
+           a.attachbdno, a.contentsbdno, a.aname, a.aupname, a.athumb, a.asize, a.rdate
+    FROM contentsbd c, attachbd a
+    WHERE c.contentsbdno = a.contentsbdno
+    ORDER BY c.contentsbdno DESC, a.attachbdno ASC
+  </select>
+  
+  <select id="list_by_contentsbdno" resultType="AttachbdVO" parameterType="int">
+    SELECT attachbdno, contentsbdno, aname, aupname, athumb, asize, rdate
+    FROM attachbd
+    WHERE contentsbdno = #{contentsbdno}
+    ORDER BY aname ASC
+  </select>
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM attachbd
+    WHERE attachbdno = #{attachbdno}
+  </delete>
+  
+  <!-- FK 컬럼 값이 사용된 레코드 갯수 산출: id="count_by_contentsbdno" -->
+  <select id="count_by_contentsbdno" resultType="int" parameterType="int">
+    SELECT COUNT(*) as cnt
+    FROM attachbd
+    WHERE contentsbdno = #{contentsbdno}   
+  </select>
+  
+  <!-- FK 컬럼 값이 사용된 레코드 삭제: id="delete_by_contentsbdno" -->
+  <delete id="delete_by_contentsbdno" parameterType="int">
+    DELETE FROM attachbd
+    WHERE contentsbdno = #{contentsbdno}
+  </delete> 
+
+</mapper> 
+ 
+ 
+
+ 
+ 

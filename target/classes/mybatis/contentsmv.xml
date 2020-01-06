@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.contentsmv.ContentsmvDAOInter"> 
+   <insert id="create" parameterType="contentsmvVO">
+     INSERT INTO contentsmv(contentsmvno, 
+                                     mno, customgrpno, title, content, 
+                                     recom, cnt, replycnt, rdate, word)
+     VALUES((SELECT NVL(MAX(contentsmvno), 0) + 1 as contentsmvno FROM contentsmv),
+                  #{mno}, #{customgrpno}, #{title}, #{content},
+                  0, 0, 0, sysdate, #{word})
+   </insert>
+   
+   <select id="list_all" resultType="contentsmvVO">
+     SELECT contentsmvno, mno, customgrpno, title, content, 
+                recom, cnt, replycnt, rdate, word
+     FROM contentsmv
+     ORDER BY contentsmvno DESC
+   </select> 
+   
+   <select id="list_by_customgrpno" resultType="ContentsmvVO" parameterType="int">
+     SELECT contentsmvno, mno, customgrpno, title, content, 
+               recom, cnt, replycnt, rdate, word
+     FROM contentsmv
+     WHERE customgrpno=#{customgrpno}                                                       
+     ORDER BY contentsmvno DESC
+   </select> 
+   
+   <select id="read" resultType="ContentsmvVO" parameterType="int">
+      SELECT contentsmvno, mno, customgrpno, title, content, 
+                recom, cnt, replycnt, rdate, word
+      FROM contentsmv
+      WHERE contentsmvno=#{contentsmvno}
+   </select>
+   
+   <update id='update' parameterType="ContentsmvVO">
+     UPDATE contentsmv
+     SET title=#{title}, content=#{content}, word=#{word}
+     WHERE contentsmvno = #{contentsmvno}
+   </update>
+   
+   <delete id="delete" parameterType="int">
+     DELETE FROM contentsmv
+     WHERE contentsmvno=#{contentsmvno}
+   </delete>
+   
+   
+   </mapper>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.mvc.contentsbd.ContentsbdDAOInter">
+
+  <insert id = "create" parameterType="ContentsbdVO">   
+    INSERT INTO contentsbd(contentsbdno, 
+                         mno, boardgrpno, title, content, 
+                         recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
+                         seqnobd, fname, fupname, thumb, fsize, 
+                         director, actor, runtime, genre, youtube)
+    VALUES((SELECT NVL(MAX(contentsbdno), 0) + 1 as contentsbdno FROM contentsbd),
+            #{mno}, #{boardgrpno}, #{title}, #{content},
+            0, 0, 0, sysdate, #{word}, #{mage}, #{mopen}, #{mbook}, 
+            #{seqnobd}, #{fname}, #{fupname}, #{thumb}, #{fsize}, 
+            #{director}, #{actor}, #{runtime}, #{genre}, #{youtube})     
+   </insert>
+
+   <!-- 예매율에 따른 전체 목록 -->
+   <select id="list_all" resultType="ContentsbdVO">
+      SELECT contentsbdno, mno, boardgrpno, title, content, 
+             recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
+             seqnobd, fname, fupname, thumb, fsize, 
+             director, actor, runtime, genre, youtube
+      FROM contentsbd
+      ORDER BY mbook DESC
+   </select> 
+   
+   <select id="list_by_boardgrpno" resultType="ContentsbdVO" parameterType="int">   
+    SELECT contentsbdno, mno, boardgrpno, title, content, 
+           recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
+           seqnobd, fname, fupname, thumb, fsize, 
+           director, actor, runtime, genre, youtube
+    FROM contentsbd
+    WHERE boardgrpno = #{boardgrpno}
+    ORDER BY mbook DESC
+   </select> 
+
+   <select id="total_count" resultType="int">
+    SELECT COUNT(*) as count
+    FROM contentsbd
+   </select> 
+   
+   <select id="read" resultType="ContentsbdVO" parameterType="int">
+    SELECT contentsbdno, mno, boardgrpno, title, content, 
+           recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
+           seqnobd, fname, fupname, thumb, fsize, 
+           director, actor, runtime, genre, youtube
+    FROM contentsbd
+    WHERE contentsbdno = #{contentsbdno}
+   </select>
+
+   <update id='update' parameterType="ContentsbdVO">
+    UPDATE contentsbd
+    SET title = #{title}, content = #{content}, word = #{word}, mage = #{mage}, mopen = #{mopen}, mbook = #{mbook},
+        director = #{director}, actor = #{actor}, runtime = #{runtime}, genre = #{genre}, youtube = #{youtube}
+    WHERE contentsbdno = #{contentsbdno}
+   </update>
+
+  <delete id="delete" parameterType="int">
+    DELETE FROM contentsbd
+    WHERE contentsbdno = #{contentsbdno}
+   </delete> 
+
+   <!-- FK 컬럼 값이 사용된 레코드 갯수 산출: id="count_by_boardgrpno" -->  
+   <select id="count_by_boardgrpno" resultType="int">
+     SELECT COUNT(*) as cnt
+     FROM contentsbd
+     WHERE boardgrpno = #{boardgrpno}
+   </select> 
+   
+   <!-- FK 컬럼 값이 사용된 레코드 삭제: id="delete_by_boardgrpno" -->  
+   <delete id="delete_by_boardgrpno" parameterType="int">
+     DELETE FROM contentsbd
+     WHERE boardgrpno = #{boardgrpno}
+   </delete> 
+   
+   <update id="increaseRplcnt" parameterType="int">
+     UPDATE contentsbd
+     SET replycnt = replycnt + 1
+     WHERE contentsbdno = #{contentsbdno}
+   </update>
+
+   <update id="decreaseRplcnt" parameterType="int">
+     UPDATE contentsbd
+     SET replycnt = replycnt + 1
+     WHERE contentsbdno = #{contentsbdno}
+   </update>
+             
+   <update id="liketo" parameterType="int">
+      UPDATE contentsbd
+      SET recom = recom + 1
+      WHERE contentsbdno = #{contentsbdno}
+   </update>
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
