@@ -24,5 +24,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ORDER BY rplno DESC
   </select>
   
+  <select id="list_by_contentsbdno_join" resultType="RplMembersVO" parameterType="int">
+    SELECT m.id,
+           r.rplno, r.contentsbdno, r.mno, r.content, r.passwd, r.rdate
+    FROM members m,  rpl r
+    WHERE (m.mno = r.mno) AND r.contentsbdno = #{contentsbdno}
+    ORDER BY r.rplno DESC
+  </select>
+  
+  <!-- <select id="checkPasswd" parameterType="HashMap" resultType="int"> -->
+  <!-- <select id="checkPasswd" parameterType="ReplyVO" resultType="int"> -->
+  <select id="checkPasswd" parameterType="Map" resultType="int">
+    SELECT COUNT(*) as cnt
+    FROM rpl
+    WHERE rplno = #{rplno} AND passwd = #{passwd}
+  </select>
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM rpl
+    WHERE rplno = #{rplno}
+  </delete>
   
 </mapper> 

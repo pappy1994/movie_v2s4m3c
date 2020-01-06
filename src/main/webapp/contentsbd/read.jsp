@@ -84,6 +84,9 @@ function create_rpl() {
       if (rdata.count > 0) {
         $('#modal_content').attr('class', 'alert alert-success'); // CSS 변경
         msg = "댓글을 등록했습니다.";
+     
+        list_by_contentsbdno(${contentsbdVO.contentsbdno }) // 목록을 새로 읽어옴.
+      
       } else {
         $('#modal_content').attr('class', 'alert alert-danger'); // CSS 변경
         msg = "댓글 등록에 실패했습니다.";
@@ -103,13 +106,13 @@ function create_rpl() {
   });
 }
 
-
+// 댓글 목록
 function list_by_contentsbdno(contentsbdno) {
   // alert(contentsbdno);
   var params = 'contentsbdno=' + contentsbdno;
 
   $.ajax({
-    url: "../rpl/list_by_contentsbdno.do", // action 대상 주소
+    url: "../rpl/list_by_contentsbdno_join.do", // action 대상 주소
     type: "get",           // get, post
     cache: false,          // 브러우저의 캐시영역 사용안함.
     async: true,           // true: 비동기
@@ -118,10 +121,24 @@ function list_by_contentsbdno(contentsbdno) {
     success: function(rdata) { // 서버로부터 성공적으로 응답이 온경우
       // alert(rdata);
       var msg = '';  
+      
+      $('#panel_rpl').html(''); // 패널 초기화, val(''): 안됨
+      
       for (i=0; i < rdata.list.length; i++) {
-        msg += rdata.list[i].content;
+        var row = rdata.list[i];
+        
+        msg += "<DIV style='border-bottom: solid 1px #EEEEEE; margin-bottom: 10px;'>";
+        msg += "<span style='font-weight: bold;'>" + row.id + "</span>";
+        msg += "  " + row.rdate;
+        if ('${sessionScope.mno}' == row.mno) { // 글쓴이 일치여부 확인
+          msg += " <A href='javascript:rpl_delete("+row.rplno+")'><IMG src='./images/delete.png'></A>";
+        }
+        msg += "  " + "<br>";
+        msg += row.content;
+        msg += "</DIV>";
       }
-      alert(msg);
+      // alert(msg);
+      $('#panel_rpl').append(msg);
     },
     // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
     error: function(request, status, error) { // callback 함수
@@ -134,6 +151,61 @@ function list_by_contentsbdno(contentsbdno) {
   
 }
 
+//삭제 레이어 출력
+function rpl_delete(rplno) {
+  // alert('rplno: ' + rplno);
+  var frm_rpl_delete = $('#frm_rpl_delete');
+  $('#rplno', frm_rpl_delete).val(rplno); // 삭제할 댓글 번호 저장
+  $('#modal_panel_delete').modal();               // 삭제폼 다이얼로그 출력
+}
+
+// 삭제 처리
+function rpl_delete_proc(rplno) {
+  // alert('rplno: ' + rplno);
+  var params = $('#frm_rpl_delete').serialize();
+  $.ajax({
+    url: "./rpl_delete.do", // action 대상 주소
+    type: "post",           // get, post
+    cache: false,          // 브러우저의 캐시영역 사용안함.
+    async: true,           // true: 비동기
+    dataType: "json",   // 응답 형식: json, xml, html...
+    data: params,        // 서버로 전달하는 데이터
+    success: function(rdata) { // 서버로부터 성공적으로 응답이 온경우
+      // alert(rdata);
+      var msg = "";
+      
+      if (rdata.count ==1) { // 패스워드 일치
+        if (rdata.delete_count == 1) { // 삭제 성공
+
+          $('#btn_frm_rpl_delete_close').trigger("click"); // 삭제폼 닫기, click 발생 
+          
+          list_by_contentsbdno(${contentsbdVO.contentsbdno }); // 목록을 다시 읽어옴
+          
+          return; // 함수 실행 종료
+        } else {  // 삭제 실패
+          msg = "패스 워드는 일치하나 댓글 삭제에 실패했습니다. <br>";
+          msg += "다시 한번 시도해주세요."
+        }
+      } else { // 패스워드 일치하지 않음.
+        msg = "패스워드가 일치하지 않습니다.";
+      }
+      
+      $('#modal_panel_delete').hide();       // 삭제폼이 있는창을 숨김
+      
+      $('#modal_panel_delete_msg_content').html(msg);   // 내용
+      $('#modal_panel_delete_msg').modal();                   // 다이얼로그 출력        
+
+    },
+    // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+    error: function(request, status, error) { // callback 함수
+      var msg = 'ERROR<br><br>';
+      msg += '<strong>request.status</strong><br>'+request.status + '<hr>';
+      msg += '<strong>error</strong><br>'+error + '<hr>';
+      console.log(msg);
+    }
+  });
+
+// 좋아요 기능
 function liketo(contentsbdno) {
   var params = 'contentsbdno=' + contentsbdno;
   // alert(params);
@@ -187,6 +259,59 @@ function liketo(contentsbdno) {
       </div>
     </div>
   </div> <!-- Modal 알림창 종료 -->
+ 
+ <!-- 삭제폼 -->
+  <div class="modal fade" id="modal_panel_delete" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h4 class="modal-title">댓글 삭제</h4><!-- 제목 -->
+        </div>
+        <div class="modal-body">
+          <form name='frm_rpl_delete' id='frm_rpl_delete' method='POST' 
+                action='./rpl_delete.do'>
+            <input type='hidden' name='rplno' id='rplno' value=''>
+            
+            <label>패스워드</label>
+            <input type='password' name='passwd' id='passwd' class='form-control'>
+            <div style='text-align: right; margin: 5px;'>
+              <button type='button' class='btn btn-success' 
+                      onclick="rpl_delete_proc(this.form.rplno.value);this.form.passwd.value='';">삭제</button>
+            </div> 
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" 
+                       id='btn_frm_rpl_delete_close'>Close</button>
+        </div>
+      </div>
+    </div>
+  </div> <!-- 삭제폼 종료 -->
+  
+  <!-- 삭제폼 알림창 시작 -->
+  <div class="modal fade" id="modal_panel_delete_msg" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"
+                  onclick="$('#modal_panel_delete').show();">×</button>
+          <h4 class="modal-title">비밀번호 에러</h4><!-- 제목 -->
+        </div>
+        <div class="modal-body">
+          <p id='modal_panel_delete_msg_content'></p>  <!-- 내용 -->
+        </div>
+        <div class="modal-footer">
+          <!-- 현재 창은 삭제되면서 삭제폼이 다시 출력됨. -->
+          <button type="button" class="btn btn-default" data-dismiss="modal"
+                  onclick="$('#modal_panel_delete').show();">Close</button>
+        </div>
+      </div>
+    </div>
+  </div> <!-- Modal 알림창 종료 -->
+ 
  
   <ASIDE style='float: left;'>
     <!--  <A href='../boardgrp/list.do'>영화 게시판</A> >  -->
@@ -258,7 +383,7 @@ function liketo(contentsbdno) {
            <br>
           </li>
      
-          <li class="li_none">
+          <li class="li_none"> <!-- 내용 -->
            <DIV style='border-top: solid 2px #eaeaea;'></DIV> <br>
             ${contentsbdVO.content }
           </li>            
