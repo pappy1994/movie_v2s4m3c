@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<!-- dev.mvc.boardgrp.BoardgrpDAOInter 패키지에 등록된 interface 명시,
+      패키지명과 인터페이스명은 실제로 존재해야함,
+      Spring이 내부적으로 자동으로 interface를 구현해줌. -->
+<mapper namespace="dev.mvc.boardgrp.BoardgrpDAOInter"> 
+   
+   <!-- 
+  insert: INSERT SQL 실행
+  id: Spring에서 호출시 사용
+  parameterType: 전달받는 데이터 객체
+  return: 등록한 레코드 갯수 리턴 (int)
+  SQL선언시 ';'은 삭제
+  #{}: ? 동일
+  #{name}: public String getName(){...
+   -->
+ <insert id="create" parameterType="BoardgrpVO">
+    INSERT INTO boardgrp(boardgrpno, name, seqno, visible, rdate)
+    VALUES((SELECT NVL(MAX(boardgrpno), 0) + 1 as boardgrpno FROM boardgrp),
+    #{name}, #{seqno}, #{visible}, sysdate)
+  </insert>  
+ 
+   <!-- 목록 출력 -->
+  <select id="list" resultType="BoardgrpVO" >
+    SELECT boardgrpno, name, seqno, visible, TO_CHAR(rdate, 'YYYY-MM-DD hh:mi:ss') as rdate, cnt
+    FROM boardgrp
+    ORDER BY seqno ASC
+  </select>
+ 
+  <!-- 우선순위 up 10 -> 1 -->
+  <update id="update_seqno_up" parameterType="int">
+    UPDATE boardgrp
+    SET seqno = seqno - 1
+    WHERE boardgrpno = #{boardgrpno}
+  </update>
+  
+  <!--   우선순위 down 1 -> 10 -->
+  <update id="update_seqno_down" parameterType="int">
+    UPDATE boardgrp
+    SET seqno = seqno + 1
+    WHERE boardgrpno = #{boardgrpno}
+  </update> 
+ 
+   <!-- 조회, id: read, 입력:boardgrpno, 리턴: BoardgrpVO -->
+  <select id="read" resultType="BoardgrpVO" parameterType="int">
+    SELECT boardgrpno, name, seqno, visible, rdate, cnt 
+    FROM boardgrp
+    WHERE boardgrpno = #{boardgrpno}
+  <!-- 변경된 레코드 갯수 리턴: update -->
+  </select> 
+  
+  <!-- 수정, id: update, 입력: BoardgrpVO, 리턴: 수정된 갯수 int -->
+  <update id="update" parameterType="BoardgrpVO">
+    UPDATE boardgrp
+    SET name = #{name}, seqno = #{seqno}, visible = #{visible}
+    WHERE boardgrpno = #{boardgrpno}
+  </update> 
+  
+  <!-- 삭제, id=delete, 입력: PK, 리턴: 삭제된 갯수 int -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM boardgrp
+    WHERE boardgrpno = #{boardgrpno}
+  </delete>
+  
+   <update id="increaseCnt" parameterType="int">
+    UPDATE boardgrp
+    SET cnt = cnt + 1
+    WHERE boardgrpno = #{boardgrpno}
+  </update>
+
+  <update id="decreaseCnt" parameterType="int">
+    UPDATE boardgrp
+    SET cnt = cnt - 1
+    WHERE boardgrpno = #{boardgrpno}
+  </update>
+ 
+  <!-- FK 컬럼 값이 사용된 레코드 갯수 산출: id="cnt_zero" -->
+  <update id="cnt_zero" parameterType="int">
+    UPDATE boardgrp 
+    SET cnt = 0 
+    WHERE boardgrpno=#{boardgrpno}
+  </update>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+</mapper>

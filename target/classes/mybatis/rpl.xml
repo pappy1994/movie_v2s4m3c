@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "dev.mvc.rpl.RplDAOInter">
+
+  <insert id="create">
+    INSERT INTO rpl(rplno, contentsbdno, mno, content, passwd, rdate)
+    VALUES((SELECT NVL(MAX(rplno), 0) + 1 as rplno FROM rpl),
+                 #{contentsbdno}, #{mno}, #{content}, #{passwd}, sysdate)
+  </insert>
+  
+  <select id="list" resultType="RplVO">
+    SELECT rplno, contentsbdno, mno, content, passwd, rdate
+    FROM rpl
+    ORDER BY rplno DESC
+  </select>
+
+  <select id="list_by_contentsbdno" resultType="RplVO" parameterType="int">
+    SELECT rplno, contentsbdno, mno, content, passwd, rdate
+    FROM rpl
+    WHERE contentsbdno=#{contentsbdno}
+    ORDER BY rplno DESC
+  </select>
+  
+  
+</mapper> 
