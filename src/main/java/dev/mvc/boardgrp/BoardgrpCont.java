@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import dev.mvc.admins.AdminsProcInter;
 import dev.mvc.contentsbd.ContentsbdProc;
 import dev.mvc.contentsbd.ContentsbdProcInter;
 
@@ -27,6 +28,10 @@ public class BoardgrpCont {
   public BoardgrpCont() {
     System.out.println("---> BoardgrpCont create.");
   }
+  
+  @Autowired
+  @Qualifier("dev.mvc.admins.AdminsProc") // 이름 지정
+  private AdminsProcInter adminsProc;
 
   // http://localhost:9090/team7/boardgrp/create.do
   @RequestMapping(value="/boardgrp/create.do", method=RequestMethod.GET)
