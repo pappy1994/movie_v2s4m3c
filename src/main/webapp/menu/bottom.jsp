@@ -7,9 +7,24 @@
 
   
   <!-- 화면 하단 메뉴 --> 
-  <DIV style='text-align: center;'>
+  <DIV style='text-align: left;'>
     <HR>
-  </DIV>
+    <A class='menu_links'  href='${root}/team7/contentsmv/list.do?customgrpno=1'>공지사항</A> 
+      <span class='top_menu1'> | </span>
+      Q&A<span class='top_menu1'> | </span> <BR>
+   </DIV>      
+   <div style = 'text-align: right;'>
+    <hr>
+      게시판 운영원칙 <span class='top_menu1'> | </span> 서비스 약관/정책 <span class='top_menu1'> | </span> 비즈니스 <span class='top_menu1'> | </span> 권리침해신고<span class='top_menu1'> | </span> 고객센터<br><br>
+      위 내용에 대한 저작권 및 법적 책임은 자료제공사 또는 글쓴이에 있으며,<br>
+      7조의 입장과 다를 수 있습니다.<br>
+      Copyright © 7grp. All rights reserved.<Br>
+    </div>
+    
+    
+    
+    <!-- Copyright Soldesk Blog All rights reserved<br>
+    (HTML5 + CSS3 + JavaScript + jQuery + JAVA + JSP + Spring + MyBATIS + Oracle) -->
+  
 
 </DIV> <!-- container END -->  
-
