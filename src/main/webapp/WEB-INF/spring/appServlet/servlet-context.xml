@@ -35,8 +35,14 @@
   <context:component-scan base-package="dev.mvc.qna" /> <!-- anne -->
   <context:component-scan base-package="dev.mvc.qnagrp" /> <!-- anne -->
   <context:component-scan base-package="dev.mvc.rpl" /> <!-- anne -->
+  
   <beans:bean id="multipartResolver"
     class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+  </beans:bean>
+  
+  <beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
+    <beans:property name="location" value="/WEB-INF/config/admins.properties"/> 
+    <beans:property name="fileEncoding" value="UTF-8" /> 
   </beans:bean>
   
   
