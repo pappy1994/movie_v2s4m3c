@@ -1,5 +1,6 @@
 package dev.mvc.contentsbd;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface ContentsbdDAOInter {
@@ -89,6 +90,20 @@ public interface ContentsbdDAOInter {
   public int decreaseReplycnt(int contentsbdno);
   
   public int liketo(int contentsbdno);
+  
+  /**
+   * 카테고리별 검색 목록
+   * @param hashMap
+   * @return
+   */
+  public List<ContentsbdVO> list_by_boardgrpno_search(HashMap<String, Object> hashMap);
+  
+  /**
+   * 카테고리별 검색 레코드 갯수
+   * @param hashMap
+   * @return
+   */
+  public int search_count(HashMap<String, Object> hashMap);
   
   
   

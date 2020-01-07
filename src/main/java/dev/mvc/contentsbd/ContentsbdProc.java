@@ -1,5 +1,6 @@
 package dev.mvc.contentsbd;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,18 @@ public class ContentsbdProc implements ContentsbdProcInter {
   @Override
   public int liketo(int contentsbdno) {
    int cnt = contentsbdDAO.liketo(contentsbdno);
+    return cnt;
+  }
+
+  @Override
+  public List<ContentsbdVO> list_by_boardgrpno_search(HashMap<String, Object> hashMap) {
+    List<ContentsbdVO> list = contentsbdDAO.list_by_boardgrpno_search(hashMap);
+    return list;
+  }
+
+  @Override
+  public int search_count(HashMap<String, Object> hashMap) {
+   int cnt = contentsbdDAO.search_count(hashMap);
     return cnt;
   }
 

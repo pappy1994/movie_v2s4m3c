@@ -1,6 +1,8 @@
 package dev.mvc.contentsbd;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,8 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dev.mvc.attachbd.AttachbdProcInter;
 import dev.mvc.attachbd.AttachbdVO;
+import dev.mvc.boardgrp.BoardgrpProc;
 import dev.mvc.boardgrp.BoardgrpProcInter;
 import dev.mvc.boardgrp.BoardgrpVO;
+import dev.mvc.rpl.RplProcInter;
 import nation.web.tool.Tool;
 import nation.web.tool.Upload;
 
@@ -37,6 +41,9 @@ public class ContentsbdCont {
     @Qualifier("dev.mvc.attachbd.AttachbdProc") // 이름 지정
     private AttachbdProcInter attachbdProc;
     
+    @Autowired
+    @Qualifier("dev.mvc.rpl.RplProc") // 이름 지정
+    private RplProcInter rplProc;
     
     public ContentsbdCont() {
       System.out.println("---> ContentsbdCont create.");
@@ -135,7 +142,7 @@ public class ContentsbdCont {
      * @param boardgrpno
      * @return
      */
-    @RequestMapping(value = "/contentsbd/list.do", method = RequestMethod.GET)
+    @RequestMapping(value = "/contentsbd/list_by_boardgrpno.do", method = RequestMethod.GET)
     public ModelAndView list_by_boardgrpno(int boardgrpno) {
       ModelAndView mav = new ModelAndView();
 
@@ -146,7 +153,36 @@ public class ContentsbdCont {
       BoardgrpVO boardgrpVO = boardgrpProc.read(boardgrpno);
       mav.addObject("boardgrpVO", boardgrpVO);
 
-      mav.setViewName("/contentsbd/list"); // 카테고리 그룹별 목록
+      mav.setViewName("/contentsbd/list_by_boardgrpno"); // 카테고리 그룹별 목록
+
+      return mav;
+    }
+    
+    /**
+     * http://localhost:9090/ojt/contentsbd/list.do?boardgrpno=2&word=스위스
+     * @param boardgrpno
+     * @param word
+     * @return
+     */
+    @RequestMapping(value = "/contentsbd/list.do", method = RequestMethod.GET)
+    public ModelAndView list_by_boardgrpno_search(int boardgrpno, String word) {
+      ModelAndView mav = new ModelAndView();
+
+      HashMap<String, Object> hashMap = new HashMap<>();
+      hashMap.put("boardgrpno", boardgrpno);
+      hashMap.put("word", word);
+      
+      List<ContentsbdVO> list = contentsbdProc.list_by_boardgrpno_search(hashMap); // 검색
+      mav.addObject("list", list);
+      // /webapp/contentsbd/list.jsp
+      
+      int search_count = contentsbdProc.search_count(hashMap); // 검색된 레코드 갯수
+      mav.addObject("search_count", search_count);
+
+      BoardgrpVO boardgrpVO = boardgrpProc.read(boardgrpno);
+      mav.addObject("boardgrpVO", boardgrpVO);
+
+      mav.setViewName("/contentsbd/list_by_boardgrpno_search"); // 카테고리 그룹별 목록
 
       return mav;
     }
@@ -331,6 +367,9 @@ public class ContentsbdCont {
       ContentsbdVO contentsbdVO = contentsbdProc.read(contentsbdno);
       mav.addObject("contentsbdVO", contentsbdVO);
 
+      BoardgrpVO boardgrpVO = boardgrpProc.read(contentsbdVO.getBoardgrpno());
+      mav.addObject("boardgrpVO", boardgrpVO);
+      
       // 1건의 파일 삭제
       attachbdProc.delete(attachbdno);
       
@@ -366,7 +405,36 @@ public class ContentsbdCont {
 
     }
   
-  
+    /**
+     * http://localhost:9090/ojt/contentsbd/rpl_delete.do?rplno=1&passwd=1234
+     * {"delete_count":0,"count":0}
+     * {"delete_count":1,"count":1}
+     * @param rplno
+     * @param passwd
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/contentsbd/rpl_delete.do", 
+                    method = RequestMethod.POST,
+                    produces = "text/plain;charset=UTF-8")
+    public String rpl_delete(int rplno, String passwd) {
+      Map<String, Object> map = new HashMap<String, Object>();
+      map.put("rplno", rplno);
+      map.put("passwd", passwd);
+      
+      int count = rplProc.checkPasswd(map); // 패스워드 검사
+      int delete_count = 0;
+      if (count == 1) {
+        delete_count = rplProc.delete(rplno); // 댓글 삭제
+      }
+      
+      JSONObject obj = new JSONObject();
+      obj.put("count", count);
+      obj.put("delete_count", delete_count);
+      
+      return obj.toString();
+    }
+
   
   
   

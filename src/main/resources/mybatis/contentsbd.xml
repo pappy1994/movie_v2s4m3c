@@ -89,14 +89,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      SET replycnt = replycnt + 1
      WHERE contentsbdno = #{contentsbdno}
    </update>
-             
+   
+   <!-- 좋아요 -->          
    <update id="liketo" parameterType="int">
       UPDATE contentsbd
       SET recom = recom + 1
       WHERE contentsbdno = #{contentsbdno}
    </update>
 
-
+   <!-- 카테고리별 검색 목록 -->
+   <select id="list_by_boardgrpno_search" resultType="ContentsbdVO" parameterType="HashMap">
+     SELECT contentsbdno, 
+            mno, boardgrpno, title, content, 
+            recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
+            seqnobd, fname, fupname, thumb, fsize, 
+            director, actor, runtime, genre, youtube
+     FROM contentsbd
+     <choose>
+       <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
+         WHERE boardgrpno = #{boardgrpno}
+       </when>
+       <otherwise>
+         WHERE boardgrpno = #{boardgrpno} AND word LIKE '%' || #{word} || '%'
+       </otherwise>
+     </choose>
+     ORDER BY contentsbdno DESC   
+   </select>
+   
+   <!-- 카테고리별 검색 레코드 갯수 -->
+   <select id="search_count" resultType="int" parameterType="HashMap">
+     SELECT COUNT(*) as cnt
+     FROM contentsbd
+     <choose>
+       <when test="word == null or word == ''">
+         WHERE boardgrpno = #{boardgrpno}
+       </when>
+       <otherwise>
+         WHERE boardgrpno = #{boardgrpno} AND word LIKE '%' || #{word} || '%'
+       </otherwise>
+     </choose>
+   </select>    
 
 
 
