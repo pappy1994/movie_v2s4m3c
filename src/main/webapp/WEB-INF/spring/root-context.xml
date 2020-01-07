@@ -27,9 +27,17 @@
     <property name="dataSource" ref="dataSource" />
     <!-- 아래부분은 매핑할 xml파일이 있는 패키지경로를 설정한다. -->
     <property name="typeAliasesPackage" 
-                   value="dev.mvc.boardgrp,
-                            dev.mvc.contentsbd,
+                   value="dev.mvc.admins,
                             dev.mvc.attachbd,
+                            dev.mvc.boardgrp,
+                            dev.mvc.contentsbd,
+                            dev.mvc.contentsmv,
+                            dev.mvc.customgrp,
+                            dev.mvc.econtents,
+                            dev.mvc.eventgrp,
+                            dev.mvc.members,
+                            dev.mvc.qna,
+                            dev.mvc.qnagrp,
                             dev.mvc.rpl"  />
     <!-- /src/main/resources/mybatis  -->
     <property name="mapperLocations" value="classpath:mybatis/*.xml" />
