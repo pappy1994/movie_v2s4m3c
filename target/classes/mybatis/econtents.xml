@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.econtents.EcontentsDAOInter"> 
+   
+   <insert id="create" parameterType="EcontentsVO">
+    INSERT INTO eventcontents(econtentsno, eventgrpno, etype, title, content, rdate)
+    VALUES((SELECT NVL(MAX(econtentsno), 0) + 1 as econtentsno FROM eventcontents),
+             #{eventgrpno},#{etype}, #{title}, #{content}, sysdate)
+   </insert>
+   
+   <select id="list" resultType="EcontentsVO">
+    SELECT econtentsno, eventgrpno, etype, title, content, rdate
+    FROM eventcontents
+    ORDER BY econtentsno ASC
+   </select>
+   
+   <select id="read" resultType="EcontentsVO" parameterType="int">
+    SELECT econtentsno, eventgrpno, etype, title, content, rdate
+    FROM eventcontents
+    WHERE econtentsno = #{econtentsno}
+   </select>
+   
+   <update id='update' parameterType="EcontentsVO">
+    UPDATE eventcontents
+    SET title=#{title}, content=#{content}
+    WHERE econtentsno = #{econtentsno}
+   </update>
+   
+   <delete id="delete" parameterType="int">
+     DELETE FROM eventcontents
+     WHERE econtentsno=#{econtentsno}
+   </delete>
+   
+          
+</mapper>
+
+
+
+
+

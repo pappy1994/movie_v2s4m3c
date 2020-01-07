@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.eventgrp.EventgrpDAOInter"> 
+   <!-- 등록 -->
+   <insert id="create" parameterType="EventgrpVO">
+    INSERT INTO eventgrp(eventgrpno, name, seqno, visible, rdate)
+    VALUES((SELECT NVL(MAX(eventgrpno), 0) + 1 as eventgrpno FROM eventgrp),
+               #{name}, #{seqno}, #{visible}, sysdate)
+   </insert>
+   
+   <select id="list_eventgrpno_asc" resultType="EventgrpVO">
+     SELECT eventgrpno, name, seqno, visible, TO_CHAR(rdate, 'YYYY-MM-DD hh:mi:ss') as rdate
+     FROM eventgrp
+     ORDER BY eventgrpno ASC
+   </select> 
+
+   <!-- 조회, id: read, 입력: categrpno, 리턴: CategrpVO -->
+   <select id="read" resultType="EventgrpVO" parameterType="int">
+     SELECT eventgrpno, name, seqno, visible, rdate 
+     FROM eventgrp
+     WHERE eventgrpno = #{eventgrpno}
+   </select> 
+   
+   <!-- 수정, id: update, 입력: CategrpVO, 리턴: 수정된 갯수 int -->
+   <update id="update" parameterType="EventgrpVO">
+     UPDATE eventgrp
+     SET name=#{name}, seqno=#{seqno}
+     WHERE eventgrpno = #{eventgrpno}
+   </update>
+   
+   <!-- 삭제, id=delete, 입력: PK, 리턴: 삭제된 갯수 int -->
+   <delete id="delete" parameterType="int">
+     DELETE FROM eventgrp
+     WHERE eventgrpno = #{eventgrpno}
+   </delete>
+   
+</mapper>
+
+
+
+
+
