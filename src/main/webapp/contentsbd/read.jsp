@@ -322,7 +322,7 @@ function liketo(contentsbdno) {
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' > | </span> 
     <A href='./list.do?boardgrpno=${boardgrpno }'>목록</A>
-      <c:if test="${sessionScope.admin != null}">
+<%--       <c:if test="${sessionScope.admin != null}"> --%>
         <span class='menu_divide' > | </span> 
         <a href="../attachbd/create.do?contentsbdno=${contentsbdno}&boardgrpno=${boardgrpVO.boardgrpno}">첨부 파일 등록</A>
         <span class='menu_divide' > | </span> 
@@ -331,7 +331,7 @@ function liketo(contentsbdno) {
         <A href='./update.do?boardgrpno=${boardgrpno }&contentsbdno=${contentsbdno}'>수정</A>
         <span class='menu_divide' > | </span> 
         <A href='./delete.do?boardgrpno=${boardgrpno }&contentsbdno=${contentsbdno}'>삭제</A>
-      </c:if>
+<%--       </c:if> --%>
   </ASIDE> 
   
   <div class='menu_line'></div>
