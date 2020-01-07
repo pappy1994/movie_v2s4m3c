@@ -27,7 +27,8 @@
     <property name="dataSource" ref="dataSource" />
     <!-- 아래부분은 매핑할 xml파일이 있는 패키지경로를 설정한다. -->
     <property name="typeAliasesPackage" 
-                   value="dev.mvc.contentsbd,
+                   value="dev.mvc.boardgrp,
+                            dev.mvc.contentsbd,
                             dev.mvc.attachbd,
                             dev.mvc.rpl"  />
     <!-- /src/main/resources/mybatis  -->
