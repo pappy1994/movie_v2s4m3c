@@ -109,7 +109,7 @@ ORDER BY rplno DESC;
 3) contentsno 별 목록
 SELECT rplno, contentsbdno, mno, content, passwd, rdate
 FROM rpl
-WHERE contentsbdno=2
+WHERE contentsbdno=1
 ORDER BY rplno DESC;
 
  RPLNO CONTENTSBDNO MNO CONTENT PASSWD RDATE
@@ -131,12 +131,12 @@ WHERE rplno=1 AND passwd='1234';
    
 -- 삭제
 DELETE FROM rpl
-WHERE rplno=1;
+WHERE rplno=3;
 
 5) contentsbdno에 해당하는 댓글 수 확인 및 삭제
 SELECT COUNT(*) as cnt
 FROM rpl
-WHERE contentsbdno=2;
+WHERE contentsbdno=1;
 
 CNT
  ---

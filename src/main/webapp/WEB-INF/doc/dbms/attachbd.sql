@@ -117,7 +117,7 @@ ORDER BY contentsbdno DESC,  attachbdno ASC;
 -- 3) 글별 파일 목록(contentsno 기준 내림 차순, attachfileno 기준 오르차순)
 SELECT attachbdno, contentsbdno, aname, aupname, athumb, asize, rdate
 FROM attachbd
-WHERE contentsbdno = 2
+WHERE contentsbdno = 1
 ORDER BY aname ASC;
 
  ATTACHBDNO CONTENTSBDNO ANAME       AUPNAME       ATHUMB        ASIZE RDATE
@@ -126,7 +126,7 @@ ORDER BY aname ASC;
 
 -- 4) 하나의 파일 삭제
 DELETE FROM attachbd
-WHERE attachbdno = 2;
+WHERE attachbdno = 1;
 
 -- 5) FK contentsno 부모 테이블별 레코드 갯수 산출
 SELECT attachbdno, contentsbdno, aname, aupname, athumb, asize, rdate

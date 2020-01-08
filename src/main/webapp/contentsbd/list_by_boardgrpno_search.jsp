@@ -21,6 +21,8 @@
   }
  </style>
  
+ 
+ 
  <script type="text/javascript">
  </script>
 
@@ -40,7 +42,7 @@
   </ASIDE>
   <ASIDE style='float: right;'>
     <A href="javascript:location.reload();">새로고침</A>
-    <c:if test="${sessionScope.id != null}">
+    <c:if test="${sessionScope.id_admins != null}">
       <span class='menu_divide' > | </span>
       <A href='./create.do?boardgrpno=${boardgrpVO.boardgrpno }'>등록</A>
     </c:if> 
@@ -91,7 +93,7 @@
            <button type='button' onclick="location.href='./read.do?contentsbdno=${contentsbdno}'" class="btn">더보기</button>                   
            <button type='button' onclick="location.href=''" class="btn">예매하기</button>             
            <br> 
-            <c:if test="${sessionScope.id != null}">
+            <c:if test="${sessionScope.id_admins != null}">
               <a href="./update.do?contentsbdno=${contentsbdno}&boardgrpno=${boardgrpVO.boardgrpno}"><span style='font-size: 0.9em;'>수정</span></a>
               <a href="./delete.do?contentsbdno=${contentsbdno}&boardgrpno=${boardgrpVO.boardgrpno}"><span style='font-size: 0.9em;'> 삭제</span></a>
               <a href="../attachbd/create.do?contentsbdno=${contentsbdno}&boardgrpno=${boardgrpVO.boardgrpno}"><span style='font-size: 0.9em;'> 사진첨부</span></a>
