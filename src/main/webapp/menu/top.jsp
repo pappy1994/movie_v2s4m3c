@@ -21,7 +21,8 @@
       </c:choose>
         
         <A class='menu_link'  href='${root}/customgrp/list.do'>카테고리 그룹</A> <span class='top_menu1'> | </span>            
-        <A class='menu_link'  href='${root}/contentsmv/list.do?customgrpno=1'>공지사항</A> <span class='top_menu1'> | </span>    
+        <A class='menu_link'  href='${root}/contentsmv/list.do?customgrpno=1'>공지사항</A><span class='top_menu1'> | </span>    
+        <A class='menu_link'  href='${root}/boardgrp/list.do'>영화</A> <span class='top_menu1'> | </span>    
         <A class='menu_link'  href='${root}/members/list.do'>회원목록</A> <span class='top_menu1'> | </span>  
         [
       <c:choose>
