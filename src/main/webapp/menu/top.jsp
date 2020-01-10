@@ -26,11 +26,11 @@
         <A class='menu_link'  href='${root}/members/list.do'>회원목록</A> <span class='top_menu1'> | </span>  
         [
       <c:choose>
-        <c:when test="${sessionScope.id_admin == null}">
+        <c:when test="${sessionScope.id_admins == null}">
           <A class='menu_link'  href='${root}/admins/login.do' >관리자 Login</A>
         </c:when>
         <c:otherwise>
-          ${sessionScope.id_admin } <A class='menu_link'  href='${root}/admins/logout.do' >관리자 Logout</A> 
+          ${sessionScope.id_admins } <A class='menu_link'  href='${root}/admins/logout.do' >관리자 Logout</A> 
         </c:otherwise>
       </c:choose>
       ]
