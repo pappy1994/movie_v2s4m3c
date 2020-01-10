@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Handles requests for the application home page.
@@ -35,5 +36,20 @@ public class HomeController {
 		
 		return "home";
 	}
+	
+//http://localhost:9090/ojt/index.do
+ /**
+  * 시작 페이지
+  * @param mno
+  * @return
+  */
+ @RequestMapping(value = "/index.do", 
+                           method = RequestMethod.GET)
+ public ModelAndView home3() {
+   ModelAndView mav = new ModelAndView();
+   mav.setViewName("/index"); // /webapp/index.jsp
+
+   return mav;
+ } 
 	
 }
