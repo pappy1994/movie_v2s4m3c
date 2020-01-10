@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
- 
+
  <!-- Fotorama -->
  <link href="fotorama.css" rel="stylesheet">
  <script src="fotorama.js"></script>
@@ -25,7 +25,6 @@
  </style>
  
 <script type="text/javascript">
-
 function panel_img(file) {
   var tag = "";
   tag = "<A href=\"javascript: $('#attachbd_panel').hide();\">";
@@ -40,13 +39,25 @@ function panel_img(file) {
 function panel_img2(file) {
   var tag = "";
   tag = "<A href=\"javascript: $('#attachbd_panel2').hide();\">";
-  tag += "  <IMG src='./storage/" + file
+  tag += "<IMG src='./storage/" + file
       + "' style='width: 80%;'>";
   tag += "</A>";
 
   $('#attachbd_panel2').html(tag);
   $('#attachbd_panel2').show();
 }
+
+
+$(function() { // 자동 실행
+  list_by_contentsbdno(${contentsbdVO.contentsbdno });  // JS의 EL 접근
+  
+  if ('${sessionScope.mno}' != '') { // 로그인된 경우
+    // alert('sessionScope.mno: ' + '${sessionScope.mno}');
+
+    var frm_rpl = $('#frm_rpl');
+    $('#content', frm_rpl).attr('placeholder', '(300자 이내) 로그인 후 이용 가능합니다.');
+  }
+});
 
 function create_rpl() {
   var frm_rpl = $('#frm_rpl');
@@ -63,9 +74,9 @@ function create_rpl() {
   // 영숫자, 한글, 공백, 특수문자: 글자수 1로 인식, 오라클은 1자가 3바이트임으로 300자로 제한
   // alert('내용 길이: ' + $('#content', frm_rpl).val().length);
   // return;
-  if ($('#content', frm_rpl).val().length > 500) {
+  if ($('#content', frm_rpl).val().length > 300) {
     $('#modal_title').html('댓글 등록'); // 제목 
-    $('#modal_content').html("500자 이상 입력할 수 없습니다."); // 내용
+    $('#modal_content').html("300자 이상 입력할 수 없습니다."); // 내용
     $('#modal_panel').modal();           // 다이얼로그 출력
     return;  // 실행 종료
   }
@@ -129,9 +140,9 @@ function list_by_contentsbdno(contentsbdno) {
         
         msg += "<DIV style='border-bottom: solid 1px #EEEEEE; margin-bottom: 10px;'>";
         msg += "<span style='font-weight: bold;'>" + row.id + "</span>";
-        msg += "  " + row.rdate;
+        msg += "  " + "<span style='font-size: 0.8em;'>" + row.rdate + "</span>" + " ";
         if ('${sessionScope.mno}' == row.mno) { // 글쓴이 일치여부 확인
-          msg += " <A href='javascript:rpl_delete("+row.rplno+")'><IMG src='./images/delete.png'></A>";
+          msg += "<A href='javascript:rpl_delete("+row.rplno+")'><span style='font-weight: bold; color: red;'>X </span></A>";
         }
         msg += "  " + "<br>";
         msg += row.content;
@@ -148,8 +159,7 @@ function list_by_contentsbdno(contentsbdno) {
       console.log(msg);
     }
   });
-  
-}
+ }
 
 //삭제 레이어 출력
 function rpl_delete(rplno) {
@@ -204,6 +214,8 @@ function rpl_delete_proc(rplno) {
       console.log(msg);
     }
   });
+}
+  
 
 // 좋아요 기능
 function liketo(contentsbdno) {
@@ -229,8 +241,6 @@ function liketo(contentsbdno) {
     }
   });
 }
-
-
 </script>
 
 </head>
@@ -338,7 +348,7 @@ function liketo(contentsbdno) {
   
   <FORM name='frm' method="get" action='./update.do'>
       <input type="hidden" name="contentsbdno" value="${contentsbdno}">
-
+      
      <DIV id='attachbd_panel2' style="width: 100%; margin: 0px auto;"></DIV> <!-- 원본 이미지 출력 -->
      <br>
       <div style='width: 92%; margin: 0px auto;'> 
@@ -362,6 +372,7 @@ function liketo(contentsbdno) {
             출연진: <span style='color: #6a00d5; font-size: 0.91em;'>${contentsbdVO.actor } </span> <br>
           ${contentsbdVO.genre }
         </div>
+        
          <br> 
          <div style='border-top: solid 2px #eaeaea;'></div> <br>
          <div>
@@ -405,9 +416,9 @@ function liketo(contentsbdno) {
                 </c:when>
               </c:choose>
             </c:forEach>
-            </div>
+           </div>
           </li>
-
+</form>
           <li class="li_none">
             <!-- 댓글 영역 시작 -->
             <DIV style='width: 80%;'>
@@ -415,11 +426,11 @@ function liketo(contentsbdno) {
               <FORM name='frm_rpl' id='frm_rpl'>
                 <input type='hidden' name='contentsbdno' id='contentsbdno' value='${contentsbdno}'>
                 <input type='hidden' name='mno' id='mno' value='${sessionScope.mno}'>
-                
-                <textarea name='content' id='content' style='width: 100%; height: 60px;' placeholder="(500자 이내) 로그인 후 이용 가능합니다."></textarea>
+                <textarea name='content' id='content' style='width: 100%; height: 60px;' placeholder="(300자 이내) 로그인 후 이용 가능합니다."></textarea>
                 <input type='password' name='passwd' id='passwd' placeholder="비밀번호">
                 <button type='button' id='btn_create' onclick="create_rpl();">등록</button>
               </FORM>
+             
               <HR>
               <DIV id='panel_rpl'>
               
@@ -432,14 +443,14 @@ function liketo(contentsbdno) {
          
           <li class="li_none">
            <DIV style='border-top: solid 2px #eaeaea;'></DIV> <br>
-            <DIV style='font-size: 0.91em;'> 검색어:
+            <DIV style='font-size: 0.91em; font-weight: bold;'> 검색어:
             <span style='color: #6a00d5; font-size: 0.91em;'>${contentsbdVO.word }</span></DIV>
             <br>
-          </li>
+          </li>    
         </ul>
       </div>
-  </FORM>
-
+</form>
+      
 <jsp:include page="/menu/bottom.jsp" flush='false' />
 </body>
 
