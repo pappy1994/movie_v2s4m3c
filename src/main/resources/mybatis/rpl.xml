@@ -45,4 +45,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE rplno = #{rplno}
   </delete>
   
+  <!-- FK 컬럼 값이 사용된 레코드 갯수 산출: id="count2_by_contentsbdno" -->
+  <select id="count2_by_contentsbdno" resultType="int" parameterType="int">
+    SELECT COUNT(*) as cnt
+    FROM rpl
+    WHERE contentsbdno = #{contentsbdno}   
+  </select>
+  
+  <!-- FK 컬럼 값이 사용된 레코드 삭제: id="delete2_by_contentsbdno" -->
+  <delete id="delete2_by_contentsbdno" parameterType="int">
+    DELETE FROM rpl
+    WHERE contentsbdno = #{contentsbdno}
+  </delete> 
+  
 </mapper> 

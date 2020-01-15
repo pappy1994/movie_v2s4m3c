@@ -70,4 +70,16 @@ public class RplProc implements RplProcInter {
    int cnt = rplDAO.delete(rplno);
     return cnt;
   }
+
+  @Override
+  public int count2_by_contentsbdno(int contentsbdno) {
+   int cnt = rplDAO.count2_by_contentsbdno(contentsbdno);
+    return cnt;
+  }
+
+  @Override
+  public int delete2_by_contentsbdno(int contentsbdno) {
+   int cnt = rplDAO.delete2_by_contentsbdno(contentsbdno);
+    return cnt;
+  }
 }

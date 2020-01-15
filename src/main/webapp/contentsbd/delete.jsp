@@ -32,6 +32,12 @@
   <input type='hidden' name='boardgrpno' value='${param.boardgrpno }'>
 </FORM>
 
+<FORM name='frm_delete2_by_contentsbdno' method='POST' 
+            action='../rpl/delete2_by_contentsbdno.do'>
+  <input type='hidden' name='contentsbdno' value='${param.contentsbdno }'>            
+  <input type='hidden' name='boardgrpno' value='${param.boardgrpno }'>
+</FORM>
+
 <jsp:include page="/menu/top.jsp" flush='false' />
   <ASIDE style='float: left;'>
     <A href='../boardgrp/list.do'>카테고리 그룹</A> > 
@@ -56,14 +62,14 @@
           다른 회원의 글은 삭제 할 수 없습니다.<br><br>
           
           <c:choose>
-            <c:when test="${count_by_contentsbdno > 0 }">
+            <c:when test="${count_by_contentsbdno > 0 && count2_by_contentsbdno > 0 }">
               <DIV style="text-decoration: underline;">
-                관련된 첨부파일 ${count_by_contentsbdno } 건이 발견되었습니다.
+                관련된 첨부파일 ${count_by_contentsbdno } 건 / 댓글 ${count2_by_contentsbdno } 건이 발견되었습니다.
               </DIV>
               <DIV> 
-                관련된 첨부파일을 삭제해야 글을 삭제 할 수 있습니다.<br>
-                <span style='color: #FF0000'>첨부 파일이 삭제되면 복구 할 수 없습니다.</span><br>
-                첨부 파일을 삭제 하시겠습니까?
+                관련된 첨부파일과 댓글을 삭제해야 글을 삭제 할 수 있습니다.<br>
+                <span style='color: #FF0000'>첨부 파일과 댓글이 삭제되면 복구 할 수 없습니다.</span><br>
+                첨부 파일과 댓글을 삭제 하시겠습니까?
                 <button type='button' onclick="delete_by_contentsbdno();" class="btn btn-info">예(삭제진행)</button> 
               </DIV>
             </c:when>

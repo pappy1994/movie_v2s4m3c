@@ -24,6 +24,7 @@ import dev.mvc.boardgrp.BoardgrpProc;
 import dev.mvc.boardgrp.BoardgrpProcInter;
 import dev.mvc.boardgrp.BoardgrpVO;
 import dev.mvc.rpl.RplProcInter;
+import dev.mvc.rpl.RplVO;
 import nation.web.tool.Tool;
 import nation.web.tool.Upload;
 
@@ -249,7 +250,13 @@ public class ContentsbdCont {
 
       return mav;
     }
-  
+    
+    /**
+     * 첨부 파일 1건 삭제 폼
+     * 
+     * @param contentsbdno
+     * @return
+     */
     // http://localhost:9090/team7/contentsbd/delete.do?boardgrpno=1&contentsbdno=1
     @RequestMapping(value = "/contentsbd/delete.do", method = RequestMethod.GET)
     public ModelAndView delete(int boardgrpno, int contentsbdno) {
@@ -265,6 +272,8 @@ public class ContentsbdCont {
       int count_by_contentsbdno = attachbdProc.count_by_contentsbdno(contentsbdno);
       mav.addObject("count_by_contentsbdno", count_by_contentsbdno);
       
+      int count2_by_contentsbdno = rplProc.count2_by_contentsbdno(contentsbdno);
+      mav.addObject("count2_by_contentsbdno", count2_by_contentsbdno);
       
       mav.setViewName("/contentsbd/delete"); // /webapp/contentsbd/delete.jsp
 
@@ -348,6 +357,9 @@ public class ContentsbdCont {
       List<AttachbdVO> attachbd_list = attachbdProc.list_by_contentsbdno(contentsbdno);
       mav.addObject("attachbd_list", attachbd_list);
       
+      List<RplVO> rpl_list = rplProc.list_by_contentsbdno(contentsbdno);
+      mav.addObject("rpl_list", rpl_list);
+      
       mav.setViewName("/contentsbd/file_delete"); // file_delete.jsp
 
       return mav;
@@ -361,7 +373,7 @@ public class ContentsbdCont {
      */
     @RequestMapping(value = "/contentsbd/file_delete_proc.do", 
                     method = RequestMethod.GET)
-    public ModelAndView file_delete_proc(int contentsbdno, int attachbdno) {
+    public ModelAndView file_delete_proc(int contentsbdno, int attachbdno, int rplno) {
       ModelAndView mav = new ModelAndView();
 
       ContentsbdVO contentsbdVO = contentsbdProc.read(contentsbdno);
@@ -372,9 +384,13 @@ public class ContentsbdCont {
       
       // 1건의 파일 삭제
       attachbdProc.delete(attachbdno);
+      rplProc.delete(rplno);
       
       List<AttachbdVO> attachbd_list = attachbdProc.list_by_contentsbdno(contentsbdno);
       mav.addObject("attachbd_list", attachbd_list);
+
+      List<RplVO> rpl_list = rplProc.list_by_contentsbdno(contentsbdno);
+      mav.addObject("rpl_list", rpl_list);
       
       mav.setViewName("/contentsbd/file_delete"); // file_delete.jsp
 

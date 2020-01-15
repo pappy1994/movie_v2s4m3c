@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dev.mvc.boardgrp.BoardgrpProcInter;
 import dev.mvc.boardgrp.BoardgrpVO;
+import dev.mvc.rpl.RplProcInter;
 import nation.web.tool.Tool;
 import nation.web.tool.Upload;
 
@@ -27,6 +28,10 @@ public class AttachbdCont {
   @Autowired
   @Qualifier("dev.mvc.attachbd.AttachbdProc") // 이름 지정
   private AttachbdProcInter attachbdProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.rpl.RplProc") // 이름 지정
+  private RplProcInter rplProc;
   
   public AttachbdCont(){
     System.out.println("--> AttachbdCont created.");
@@ -138,8 +143,10 @@ public class AttachbdCont {
     ModelAndView mav = new ModelAndView();
 
     int count = attachbdProc.delete_by_contentsbdno(contentsbdno);
-
+    int cnt = rplProc.delete2_by_contentsbdno(contentsbdno);
+    
     ra.addAttribute("count", count); // 삭제된 레코드 갯수
+    ra.addAttribute("cnt", cnt); // 삭제된 레코드 갯수
     ra.addAttribute("contentsbdno", contentsbdno);
     ra.addAttribute("boardgrpno", boardgrpno);
     

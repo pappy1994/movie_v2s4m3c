@@ -66,6 +66,7 @@
           <li class="li_none">
             <DIV id='attachbd_panel' style="width: 80%; margin: 0px auto;"></DIV> <!-- 원본 이미지 출력 -->
           </li>
+          
           <li class="li_none" style='text-align: center;'>
             <c:forEach var="attachbdVO" items="${attachbd_list }">
               <c:set var="athumb" value="${attachbdVO.athumb.toLowerCase() }" />
@@ -78,6 +79,7 @@
               </c:choose>
             </c:forEach>
           </li>
+          
           <li class="li_center" >
             <button type="button" onclick="location.href='./read.do?contentsbdno=${contentsbdno}'"
                         class="btn btn-info">삭제 완료</button>
