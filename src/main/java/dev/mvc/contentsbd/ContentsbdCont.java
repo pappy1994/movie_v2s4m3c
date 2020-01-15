@@ -120,7 +120,7 @@ public class ContentsbdCont {
       
       ra.addAttribute("count", count);
       ra.addAttribute("boardgrpno", contentsbdVO.getBoardgrpno());
-      
+       
       mav.setViewName("redirect:/contentsbd/create_msg.jsp");
       return mav;
     }
@@ -373,7 +373,10 @@ public class ContentsbdCont {
      */
     @RequestMapping(value = "/contentsbd/file_delete_proc.do", 
                     method = RequestMethod.GET)
-    public ModelAndView file_delete_proc(int contentsbdno, int attachbdno, int rplno) {
+    public ModelAndView file_delete_proc(HttpServletRequest request,
+                                         int contentsbdno, 
+                                         int attachbdno, 
+                                         int rplno) {
       ModelAndView mav = new ModelAndView();
 
       ContentsbdVO contentsbdVO = contentsbdProc.read(contentsbdno);
@@ -382,7 +385,14 @@ public class ContentsbdCont {
       BoardgrpVO boardgrpVO = boardgrpProc.read(contentsbdVO.getBoardgrpno());
       mav.addObject("boardgrpVO", boardgrpVO);
       
-      // 1건의 파일 삭제
+      // 삭제할 파일 정보를 읽어옴.
+      AttachbdVO attachbdVO = attachbdProc.read(attachbdno);
+      
+      String upDir = Tool.getRealPath(request, "/attachbd/storage"); // 절대 경로
+      Tool.deleteFile(upDir, attachbdVO.getAupname()); // Folder에서 1건의 파일 삭제
+      Tool.deleteFile(upDir, attachbdVO.getAthumb()); // 1건의 Thumb 파일 삭제
+      
+      // DBMS에서 1건의 파일 삭제
       attachbdProc.delete(attachbdno);
       rplProc.delete(rplno);
       

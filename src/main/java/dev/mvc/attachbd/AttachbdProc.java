@@ -45,6 +45,12 @@ public class AttachbdProc implements AttachbdProcInter {
   public int delete_by_contentsbdno(int contentsbdno) {
    int cnt = attachbdDAO.delete_by_contentsbdno(contentsbdno);
     return cnt;
+  }
+
+  @Override
+  public AttachbdVO read(int attachbdno) {
+    AttachbdVO attachbdVO = attachbdDAO.read(attachbdno);
+    return attachbdVO;
   } 
   
 }

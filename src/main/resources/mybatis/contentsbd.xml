@@ -19,16 +19,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{director}, #{actor}, #{runtime}, #{genre}, #{youtube})     
    </insert>
 
-   <!-- 예매율에 따른 전체 목록 -->
+   <!-- 개봉일에 따른 전체 목록 -->
    <select id="list_all" resultType="ContentsbdVO">
       SELECT contentsbdno, mno, boardgrpno, title, content, 
              recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
              seqnobd, fname, fupname, thumb, fsize, 
              director, actor, runtime, genre, youtube
       FROM contentsbd
-      ORDER BY mbook DESC
+      ORDER BY mopen DESC
    </select> 
    
+   <!-- 예매율에 따른 목록(1) -->
    <select id="list_by_boardgrpno" resultType="ContentsbdVO" parameterType="int">   
     SELECT contentsbdno, mno, boardgrpno, title, content, 
            recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
@@ -113,7 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          WHERE boardgrpno = #{boardgrpno} AND word LIKE '%' || #{word} || '%'
        </otherwise>
      </choose>
-     ORDER BY contentsbdno DESC   
+     ORDER BY mbook DESC  
    </select>
    
    <!-- 카테고리별 검색 레코드 갯수 -->

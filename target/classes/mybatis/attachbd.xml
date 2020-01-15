@@ -44,6 +44,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE contentsbdno = #{contentsbdno}
   </delete> 
 
+  <select id="read"  resultType="AttachbdVO" parameterType="int">
+    SELECT attachbdno, contentsbdno, aname, aupname, athumb, asize, rdate
+    FROM attachbd
+    WHERE attachbdno = #{attachbdno}
+  </select>
+
 </mapper> 
  
  

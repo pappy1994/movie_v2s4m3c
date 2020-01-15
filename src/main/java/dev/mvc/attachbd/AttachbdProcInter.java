@@ -48,4 +48,10 @@ public interface AttachbdProcInter {
    */
   public int delete_by_contentsbdno(int contentsbdno);
   
+  /**
+   * read
+   * @param attachbdno
+   * @return
+   */
+  public AttachbdVO read(int attachbdno);
 }

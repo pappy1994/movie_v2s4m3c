@@ -387,19 +387,11 @@ function liketo(contentsbdno) {
       
         <ul style='clear: both; width: 100%;'> 
          <br> 
-          <li class="li_none" style='text-align: center;'> <!-- 예고편 유튜브 -->         
-           <DIV style='width: 949px; height: 534px; margin: 10px auto;'>
-                ${contentsbdVO.youtube }                     
-           </DIV>
-           <br>
-          </li>
-     
-          <li class="li_none"> <!-- 내용 -->
-           <DIV style='border-top: solid 2px #eaeaea;'></DIV> <br>
-            ${contentsbdVO.content }
-          </li>            
-          
-          <li class="li_none"> <!-- 포토라마 넣을 곳 -->
+         <li class="li_none"> <!-- 내용 -->
+          ${contentsbdVO.content }
+         </li> 
+         
+         <li class="li_none"> <!-- 포토라마 넣을 곳 -->
            <DIV style='border-top: solid 2px #eaeaea;'></DIV> <br>
             <DIV id='attachbd_panel' style="width: 100%; margin: 0px auto;"></DIV> <!-- 원본 이미지 출력 -->
           </li>
@@ -418,6 +410,14 @@ function liketo(contentsbdno) {
             </c:forEach>
            </div>
           </li>
+
+          <li class="li_none" style='text-align: center;'> <!-- 예고편 유튜브 -->
+           <DIV style='border-top: solid 2px #eaeaea;'></DIV> <br>         
+             <DIV style='width: 949px; height: 534px; margin: 10px auto;'>
+                  ${contentsbdVO.youtube }                     
+             </DIV> 
+             <br>
+          </li>          
 </form>
           <li class="li_none">
             <!-- 댓글 영역 시작 -->
