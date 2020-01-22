@@ -1,5 +1,6 @@
 package dev.mvc.contentsbd;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -105,6 +106,15 @@ public interface ContentsbdDAOInter {
    */
   public int search_count(HashMap<String, Object> hashMap);
   
+  /**
+   * <xmp>
+   * 검색 + 페이징 목록
+   * <select id="list_by_boardgrpno_search_paging" resultType="ContentsVO" parameterType="HashMap">
+   * </xmp>
+   * @param map
+   * @return
+   */
+  public ArrayList<ContentsbdVO> list_by_boardgrpno_search_paging(HashMap<String, Object> map);
   
   
   

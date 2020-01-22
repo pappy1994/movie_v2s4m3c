@@ -325,22 +325,22 @@ function liketo(contentsbdno) {
  
   <ASIDE style='float: left;'>
     <!--  <A href='../boardgrp/list.do'>영화 게시판</A> >  -->
-    <A href='./list.do?boardgrpno=${boardgrpno }'>${boardgrpVO.name }</A> >
+    <A href='./list.do?boardgrpno=${boardgrpno }&word=${param.word}'>${boardgrpVO.name }</A> >
     ${contentsbdVO.title}</A>
   </ASIDE>
   <ASIDE style='float: right;'>
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' > | </span> 
-    <A href='./list.do?boardgrpno=${boardgrpno }'>목록</A>
+    <A href='./list.do?boardgrpno=${boardgrpno }&word=${param.word}&nowPage=${param.nowPage}'>목록</A>
       <c:if test="${sessionScope.id_admins != null}"> 
         <span class='menu_divide' > | </span> 
-        <a href="../attachbd/create.do?contentsbdno=${contentsbdno}&boardgrpno=${boardgrpVO.boardgrpno}">첨부 파일 등록</A>
+        <a href="../attachbd/create.do?contentsbdno=${contentsbdno}&boardgrpno=${boardgrpVO.boardgrpno}&nowPage=${param.nowPage}">첨부 파일 등록</A>
         <span class='menu_divide' > | </span> 
-        <a href="./file_delete.do?contentsbdno=${contentsbdno}&boardgrpno=${boardgrpVO.boardgrpno}">첨부 파일 삭제</A>
+        <a href="./file_delete.do?contentsbdno=${contentsbdno}&boardgrpno=${boardgrpVO.boardgrpno}&nowPage=${param.nowPage}">첨부 파일 삭제</A>
         <span class='menu_divide' > | </span> 
-        <A href='./update.do?boardgrpno=${boardgrpno }&contentsbdno=${contentsbdno}'>수정</A>
+        <A href='./update.do?boardgrpno=${boardgrpno }&contentsbdno=${contentsbdno}&nowPage=${param.nowPage}'>수정</A>
         <span class='menu_divide' > | </span> 
-        <A href='./delete.do?boardgrpno=${boardgrpno }&contentsbdno=${contentsbdno}'>삭제</A>
+        <A href='./delete.do?boardgrpno=${boardgrpno }&contentsbdno=${contentsbdno}&nowPage=${param.nowPage}'>삭제</A>
         </c:if> 
   </ASIDE> 
   
@@ -387,11 +387,19 @@ function liketo(contentsbdno) {
       
         <ul style='clear: both; width: 100%;'> 
          <br> 
-         <li class="li_none"> <!-- 내용 -->
-          ${contentsbdVO.content }
-         </li> 
-         
-         <li class="li_none"> <!-- 포토라마 넣을 곳 -->
+          <li class="li_none" style='text-align: center;'> <!-- 예고편 유튜브 -->         
+           <DIV style='width: 949px; height: 534px; margin: 10px auto;'>
+                ${contentsbdVO.youtube }                     
+           </DIV>
+           <br>
+          </li>
+     
+          <li class="li_none"> <!-- 내용 -->
+           <DIV style='border-top: solid 2px #eaeaea;'></DIV> <br>
+            ${contentsbdVO.content }
+          </li>            
+          
+          <li class="li_none"> <!-- 포토라마 넣을 곳 -->
            <DIV style='border-top: solid 2px #eaeaea;'></DIV> <br>
             <DIV id='attachbd_panel' style="width: 100%; margin: 0px auto;"></DIV> <!-- 원본 이미지 출력 -->
           </li>
@@ -410,14 +418,6 @@ function liketo(contentsbdno) {
             </c:forEach>
            </div>
           </li>
-
-          <li class="li_none" style='text-align: center;'> <!-- 예고편 유튜브 -->
-           <DIV style='border-top: solid 2px #eaeaea;'></DIV> <br>         
-             <DIV style='width: 949px; height: 534px; margin: 10px auto;'>
-                  ${contentsbdVO.youtube }                     
-             </DIV> 
-             <br>
-          </li>          
 </form>
           <li class="li_none">
             <!-- 댓글 영역 시작 -->

@@ -35,10 +35,10 @@
           </LI>
           <LI class='li_none'>
             <button type='button' 
-                        onclick="location.href='../contentsbd/delete.do?contentsbdno=${param.contentsbdno}&boardgrpno=${param.boardgrpno}'"
+                        onclick="location.href='../contentsbd/delete.do?contentsbdno=${param.contentsbdno}&boardgrpno=${param.boardgrpno}&nowPage=${param.nowPage}'"
                         class="btn btn-info">계속 삭제 진행</button>
             <button type='button' 
-                        onclick="location.href='../contentsbd/read.do?boardgrpno=${param.boardgrpno}&contentsbdno=${param.contentsbdno }'"
+                        onclick="location.href='../contentsbd/read.do?boardgrpno=${param.boardgrpno}&contentsbdno=${param.contentsbdno }&nowPage=${param.nowPage}'"
                         class="btn btn-info">글 삭제 중지</button>                                                
           </LI>
         </c:when>
@@ -51,7 +51,7 @@
                         onclick="history.back();"
                         class="btn btn-info">재시도</button>
             <button type='button' 
-                        onclick="location.href='../contentsbd/read.do?boardgrpno=${param.boardgrpno}&contentsbdno=${param.contentsbdno }'"   
+                        onclick="location.href='../contentsbd/read.do?boardgrpno=${param.boardgrpno}&contentsbdno=${param.contentsbdno }&nowPage=${param.nowPage}'"   
                         class="btn btn-info">삭제 중지</button>                        
           </LI>
         </c:otherwise>

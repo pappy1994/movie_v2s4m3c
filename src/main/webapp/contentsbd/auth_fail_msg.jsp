@@ -30,7 +30,7 @@
       </LI>
       <LI class='li_none'>
         <button type='button' 
-                    onclick="location.href='./list.do?boardgrpno=${param.boardgrpno}'"
+                    onclick="location.href='./list.do?boardgrpno=${param.boardgrpno}&nowPage=${param.nowPage }'"
                     class="btn btn-info">목록</button>                        
         </LI>
       </UL>

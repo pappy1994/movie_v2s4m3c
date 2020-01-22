@@ -37,7 +37,8 @@
       <!-- FK boardgrpno 지정 -->
       <input type='hidden' name='boardgrpno' id='boardgrpno' value='${param.boardgrpno }'>
       <input type='hidden' name='contentsbdno' id='contentsbdno' value='${param.contentsbdno }'>
-      
+      <input type='hidden' name='nowPage' value='${param.nowPage }'>
+       
       <div class="form-group">   
         <div class="col-md-12">
           <input type='file' class="form-control input-lg" name='anamesMF'  

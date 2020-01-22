@@ -43,10 +43,10 @@
       <LI class='li_none'>
         <br>
         <button type='button' 
-                    onclick="location.href='../contentsbd/read.do?boardgrpno=${param.boardgrpno}&contentsbdno=${param.contentsbdno }'"
+                    onclick="location.href='../contentsbd/read.do?boardgrpno=${param.boardgrpno}&contentsbdno=${param.contentsbdno }&nowPage=${param.nowPage}'"
                     class="btn btn-info">업로드된 파일 확인</button>
         <button type='button' 
-                    onclick="location.href='../contentsbd/list.do?boardgrpno=${param.boardgrpno}'"
+                    onclick="location.href='../contentsbd/list.do?boardgrpno=${param.boardgrpno}&nowPage=${param.nowPage}'"
                     class="btn btn-info">목록</button>
       </LI>
      </UL>

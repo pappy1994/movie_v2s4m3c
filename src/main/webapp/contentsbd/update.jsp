@@ -42,7 +42,8 @@
   <FORM name='frm' method='POST' action='./update.do' class="form-horizontal">
       <input type='hidden' name='boardgrpno' value='${boardgrpVO.boardgrpno }'>
       <input type='hidden' name='contentsbdno' value='${contentsbdVO.contentsbdno }'>
-      
+      <input type='hidden' name='nowPage' value='${param.nowPage }'>
+       
       <div class="form-group">   
         <label class="col-md-1 control-label">제목</label>
         <div class="col-md-11">

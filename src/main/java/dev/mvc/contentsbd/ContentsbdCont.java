@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -120,7 +121,7 @@ public class ContentsbdCont {
       
       ra.addAttribute("count", count);
       ra.addAttribute("boardgrpno", contentsbdVO.getBoardgrpno());
-       
+      
       mav.setViewName("redirect:/contentsbd/create_msg.jsp");
       return mav;
     }
@@ -165,7 +166,7 @@ public class ContentsbdCont {
      * @param word
      * @return
      */
-    @RequestMapping(value = "/contentsbd/list.do", method = RequestMethod.GET)
+/*    @RequestMapping(value = "/contentsbd/list.do", method = RequestMethod.GET)
     public ModelAndView list_by_boardgrpno_search(int boardgrpno, String word) {
       ModelAndView mav = new ModelAndView();
 
@@ -186,7 +187,64 @@ public class ContentsbdCont {
       mav.setViewName("/contentsbd/list_by_boardgrpno_search"); // 카테고리 그룹별 목록
 
       return mav;
-    }
+    }*/
+    
+    /**
+     * 목록 + 검색 + 페이징 지원
+     * http://localhost:9090/ojt/contentsbd/list.do
+     * http://localhost:9090/ojt/contentsbd/list.do?boardgrpno=1&word=스위스&nowPage=1
+     * @param boardgrpno
+     * @param word
+     * @param nowPage
+     * @return
+     */
+    @RequestMapping(value = "/contentsbd/list.do", 
+                    method = RequestMethod.GET)
+    public ModelAndView list_by_boardgrpno_search_paging(
+        @RequestParam(value="boardgrpno", defaultValue="1") int boardgrpno,
+        @RequestParam(value="word", defaultValue="") String word,
+        @RequestParam(value="nowPage", defaultValue="1") int nowPage
+        ) { 
+      System.out.println("--> nowPage: " + nowPage);
+      
+      ModelAndView mav = new ModelAndView();
+      mav.setViewName("/contentsbd/list_by_boardgrpno_search_paging");   
+      
+      // 숫자와 문자열 타입을 저장해야함으로 Obejct 사용
+      HashMap<String, Object> map = new HashMap<String, Object>();
+      map.put("boardgrpno", boardgrpno); // #{boardgrpno}
+      map.put("word", word);     // #{word}
+      map.put("nowPage", nowPage);       
+      
+      // 검색 목록
+      List<ContentsbdVO> list = contentsbdProc.list_by_boardgrpno_search_paging(map);
+      mav.addObject("list", list);
+      
+      // 검색된 레코드 갯수
+      int search_count = contentsbdProc.search_count(map);
+      mav.addObject("search_count", search_count);
+    
+      BoardgrpVO boardgrpVO = boardgrpProc.read(boardgrpno);
+      mav.addObject("boardgrpVO", boardgrpVO);
+    
+      /*
+       * SPAN태그를 이용한 박스 모델의 지원, 1 페이지부터 시작 
+       * 현재 페이지: 11 / 22   [이전] 11 12 13 14 15 16 17 18 19 20 [다음] 
+       * 
+       * @param listFile 목록 파일명 
+       * @param categrpno 카테고리번호 
+       * @param search_count 검색(전체) 레코드수 
+       * @param nowPage     현재 페이지
+       * @param word 검색어
+       * @return 페이징 생성 문자열
+       */ 
+      String paging = contentsbdProc.pagingBox("list.do", boardgrpno, search_count, nowPage, word);
+      mav.addObject("paging", paging);  
+      mav.addObject("nowPage", nowPage);
+      
+      return mav;
+    }    
+      
     
     /**
      * 조회 http://localhost:9090/team7/contentsbd/read.do?contentsbdno=1
@@ -211,7 +269,7 @@ public class ContentsbdCont {
       return mav;
     }
   
-    // http://localhost:9090/ojt/contentsbd/update.do?memberno=1&boardgrpno=1
+    // http://localhost:9090/ojt/contentsbd/update.do?mno=1&boardgrpno=1
     @RequestMapping(value = "/contentsbd/update.do", method = RequestMethod.GET)
     public ModelAndView update(int boardgrpno, int contentsbdno) {
       ModelAndView mav = new ModelAndView();
@@ -235,7 +293,8 @@ public class ContentsbdCont {
     @RequestMapping(value = "/contentsbd/update.do", 
                     method = RequestMethod.POST)
     public ModelAndView update(RedirectAttributes ra,
-                               ContentsbdVO contentsbdVO) {
+                               ContentsbdVO contentsbdVO,
+                               int nowPage) {
       ModelAndView mav = new ModelAndView();
 
       int count = contentsbdProc.update(contentsbdVO);
@@ -245,7 +304,7 @@ public class ContentsbdCont {
       ra.addAttribute("count", count);
       ra.addAttribute("boardgrpno", contentsbdVO.getBoardgrpno());
       ra.addAttribute("contentsbdno", contentsbdVO.getContentsbdno());
-      
+      ra.addAttribute("nowPage", nowPage);
       mav.setViewName("redirect:/contentsbd/update_msg.jsp");
 
       return mav;
@@ -290,7 +349,10 @@ public class ContentsbdCont {
     @RequestMapping(value = "/contentsbd/delete.do", method = RequestMethod.POST)
     public ModelAndView delete(HttpSession session,
                                RedirectAttributes ra,
-                               int boardgrpno, int contentsbdno) {
+                               int boardgrpno, 
+                               int contentsbdno,
+                               @RequestParam(value="word", defaultValue="") String word,
+                               @RequestParam(value="nowPage", defaultValue="1") int nowPage) {
       ModelAndView mav = new ModelAndView();
       
       int mno = (Integer)session.getAttribute("mno");
@@ -299,15 +361,30 @@ public class ContentsbdCont {
         int count = contentsbdProc.delete(contentsbdno);
         if (count == 1) {
           boardgrpProc.decreaseCnt(boardgrpno);
+          
+          // -------------------------------------------------------------------------------------
+             // 마지막 페이지의 레코드 삭제시의 페이지 번호 -1 처리
+             HashMap<String, Object> map = new HashMap<String, Object>();
+             map.put("boardgrpno", boardgrpno);
+             map.put("word", word);
+             if (contentsbdProc.search_count(map) % Contents.RECORD_PER_PAGE == 0) {
+               nowPage = nowPage - 1;
+               if (nowPage < 1) {
+                 nowPage = 1;
+               }
+             }
+         // -------------------------------------------------------------------------------------
+             
         }
        
         ra.addAttribute("count", count);
         ra.addAttribute("boardgrpno", boardgrpno);
         ra.addAttribute("contentsbdno", contentsbdno);
-        
+        ra.addAttribute("nowPage", nowPage);
         mav.setViewName("redirect:/contentsbd/delete_msg.jsp");
       } else {
         ra.addAttribute("boardgrpno", boardgrpno);
+        ra.addAttribute("nowPage", nowPage);
         mav.setViewName("redirect:/contentsbd/auth_fail_msg.jsp");
       }
 

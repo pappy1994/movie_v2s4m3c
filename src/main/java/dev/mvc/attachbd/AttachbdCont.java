@@ -60,7 +60,8 @@ public class AttachbdCont {
   public ModelAndView create(RedirectAttributes ra,
                              HttpServletRequest request,
                              AttachbdVO attachbdVO,
-                             int boardgrpno) {
+                             int boardgrpno,
+                             int nowPage) {
     
     ModelAndView mav = new ModelAndView();
     // -----------------------------------------------------
@@ -105,6 +106,7 @@ public class AttachbdCont {
     ra.addAttribute("upload_count", upload_count);
     ra.addAttribute("boardgrpno", boardgrpno);
     ra.addAttribute("contentsbdno", attachbdVO.getContentsbdno());
+    ra.addAttribute("nowPage", nowPage);
     
     mav.setViewName("redirect:/attachbd/create_msg.jsp");
     return mav;
@@ -139,16 +141,18 @@ public class AttachbdCont {
                              method = RequestMethod.POST)
   public ModelAndView delete_by_contentsbdno(RedirectAttributes ra,
                                              int contentsbdno,
-                                             int boardgrpno) {
+                                             int boardgrpno,
+                                             int nowPage) {
     ModelAndView mav = new ModelAndView();
 
     int count = attachbdProc.delete_by_contentsbdno(contentsbdno);
-    int cnt = rplProc.delete2_by_contentsbdno(contentsbdno);
+    int cnt = rplProc.delete2_by_contentsbdno(contentsbdno); // 리플 삭제
     
     ra.addAttribute("count", count); // 삭제된 레코드 갯수
     ra.addAttribute("cnt", cnt); // 삭제된 레코드 갯수
     ra.addAttribute("contentsbdno", contentsbdno);
     ra.addAttribute("boardgrpno", boardgrpno);
+    ra.addAttribute("nowPage", nowPage);
     
     mav.setViewName("redirect:/attachbd/delete_by_contentsbdno_msg.jsp");
 

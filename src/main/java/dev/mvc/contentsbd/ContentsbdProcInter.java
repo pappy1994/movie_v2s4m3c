@@ -1,5 +1,6 @@
 package dev.mvc.contentsbd;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -105,7 +106,29 @@ public interface ContentsbdProcInter {
     */
    public int search_count(HashMap<String, Object> hashMap);
    
-  
+   /**
+    * 페이지 목록 문자열 생성, Box 형태
+    * @param listFile 목록 파일명 
+    * @param categrpno 카테고리번호
+    * @param search_count 검색 갯수
+    * @param nowPage 현재 페이지, nowPage는 1부터 시작
+    * @param word 검색어
+    * @return
+    */
+   public String pagingBox(String listFile, int boardgrpno, int search_count, int nowPage, String word);
+    
+   
+   /**
+    * <xmp>
+    * 검색 + 페이징 목록
+    * <select id="list_by_boardgrpno_search_paging" resultType="ContentsVO" parameterType="HashMap">
+    * </xmp>
+    * @param map
+    * @return
+    */
+   public ArrayList<ContentsbdVO> list_by_boardgrpno_search_paging(HashMap<String, Object> map);
+   
+   
   
   
   

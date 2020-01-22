@@ -32,10 +32,10 @@
           </LI>
           <LI class='li_none'>
             <button type='button' 
-                        onclick="location.href='./read.do?boardgrpno=${param.boardgrpno}&contentsbdno=${param.contentsbdno}'"
+                        onclick="location.href='./read.do?boardgrpno=${param.boardgrpno}&contentsbdno=${param.contentsbdno}&nowPage=${param.nowPage}'"
                         class="btn btn-info">변경 확인</button>
             <button type='button' 
-                        onclick="location.href='./list.do?boardgrpno=${param.boardgrpno}'"
+                        onclick="location.href='./list.do?boardgrpno=${param.boardgrpno}&nowPage=${param.nowPage}'"
                         class="btn btn-info">목록</button>                        
           </LI>
         </c:when>
@@ -48,7 +48,7 @@
                         onclick="history.back();"
                         class="btn btn-info">재시도</button>
             <button type='button' 
-                        onclick="location.href='./list.do?boardgrpno=${param.boardgrpno}'"
+                        onclick="location.href='./list.do?boardgrpno=${param.boardgrpno}&nowPage=${param.nowPage}'"
                         class="btn btn-info">목록</button>                        
           </LI>
         </c:otherwise>

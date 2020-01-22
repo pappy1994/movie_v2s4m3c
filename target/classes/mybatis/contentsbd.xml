@@ -19,17 +19,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{director}, #{actor}, #{runtime}, #{genre}, #{youtube})     
    </insert>
 
-   <!-- 개봉일에 따른 전체 목록 -->
+   <!-- 예매율에 따른 전체 목록 -->
    <select id="list_all" resultType="ContentsbdVO">
       SELECT contentsbdno, mno, boardgrpno, title, content, 
              recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
              seqnobd, fname, fupname, thumb, fsize, 
              director, actor, runtime, genre, youtube
       FROM contentsbd
-      ORDER BY mopen DESC
+      ORDER BY mbook DESC
    </select> 
    
-   <!-- 예매율에 따른 목록(1) -->
    <select id="list_by_boardgrpno" resultType="ContentsbdVO" parameterType="int">   
     SELECT contentsbdno, mno, boardgrpno, title, content, 
            recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
@@ -114,7 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          WHERE boardgrpno = #{boardgrpno} AND word LIKE '%' || #{word} || '%'
        </otherwise>
      </choose>
-     ORDER BY mbook DESC  
+     ORDER BY contentsbdno DESC   
    </select>
    
    <!-- 카테고리별 검색 레코드 갯수 -->
@@ -131,7 +130,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      </choose>
    </select>    
 
-
+   <!-- 카테고리별 검색 목록 + 페이징 -->
+   <select id="list_by_boardgrpno_search_paging"
+           resultType="ContentsbdVO" parameterType="HashMap">
+     SELECT contentsbdno, 
+            mno, boardgrpno, title, content, 
+            recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
+            seqnobd, fname, fupname, thumb, fsize, 
+            director, actor, runtime, genre, youtube, r
+     FROM (        
+           SELECT contentsbdno, 
+                  mno, boardgrpno, title, content, 
+                  recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
+                  seqnobd, fname, fupname, thumb, fsize, 
+                  director, actor, runtime, genre, youtube, rownum as r
+           FROM (           
+                  SELECT contentsbdno, 
+                         mno, boardgrpno, title, content, 
+                         recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
+                         seqnobd, fname, fupname, thumb, fsize, 
+                         director, actor, runtime, genre, youtube
+                  FROM contentsbd
+                  <choose>
+                    <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
+                      WHERE boardgrpno=#{boardgrpno}
+                    </when>
+                    <otherwise>
+                      WHERE boardgrpno=#{boardgrpno} AND word LIKE '%' || #{word} || '%'
+                    </otherwise>
+                  </choose>
+                  ORDER BY contentsbdno DESC
+                )  
+            ) 
+            WHERE r&gt;=#{startNum} AND r&lt;=#{endNum}
+            <!-- 
+            1 page: WHERE r>=1 AND r<=10;
+            2 page: WHERE r>=11 AND r<=20;
+            3 page: WHERE r>=21 AND r<=30;
+            -->
+   </select>     
 
 
 

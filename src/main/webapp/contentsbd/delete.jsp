@@ -30,12 +30,7 @@
             action='../attachbd/delete_by_contentsbdno.do'>
   <input type='hidden' name='contentsbdno' value='${param.contentsbdno }'>            
   <input type='hidden' name='boardgrpno' value='${param.boardgrpno }'>
-</FORM>
-
-<FORM name='frm_delete2_by_contentsbdno' method='POST' 
-            action='../rpl/delete2_by_contentsbdno.do'>
-  <input type='hidden' name='contentsbdno' value='${param.contentsbdno }'>            
-  <input type='hidden' name='boardgrpno' value='${param.boardgrpno }'>
+  <input type='hidden' name='nowPage' value='${param.nowPage }'>
 </FORM>
 
 <jsp:include page="/menu/top.jsp" flush='false' />
@@ -54,6 +49,7 @@
   <FORM name='frm' method='POST' action='./delete.do'>
       <input type='hidden' name='contentsbdno' value='${param.contentsbdno}'>
       <input type="hidden" name="boardgrpno" value="${param.boardgrpno }">
+      <input type='hidden' name='nowPage' value='${param.nowPage }'>
             
   <div class="form-group">   
         <div class="col-md-12" style='text-align: center; margin: 30px;'>
