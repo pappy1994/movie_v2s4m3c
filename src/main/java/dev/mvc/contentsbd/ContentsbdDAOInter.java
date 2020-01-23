@@ -114,7 +114,7 @@ public interface ContentsbdDAOInter {
    * @param map
    * @return
    */
-  public ArrayList<ContentsbdVO> list_by_boardgrpno_search_paging(HashMap<String, Object> map);
+  public ArrayList<ContentsbdVO> list_all_by_boardgrpno_search_paging(HashMap<String, Object> map);
   
   
   

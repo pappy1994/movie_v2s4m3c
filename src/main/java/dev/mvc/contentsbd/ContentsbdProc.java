@@ -186,7 +186,7 @@ public class ContentsbdProc implements ContentsbdProcInter {
  
  
   @Override
-  public ArrayList<ContentsbdVO> list_by_boardgrpno_search_paging(HashMap<String, Object> map) {
+  public ArrayList<ContentsbdVO> list_all_by_boardgrpno_search_paging(HashMap<String, Object> map) {
     /* 
     페이지에서 출력할 시작 레코드 번호 계산 기준값, nowPage는 1부터 시작
     1 페이지: nowPage = 1, (1 - 1) * 10 --> 0 
@@ -207,7 +207,7 @@ public class ContentsbdProc implements ContentsbdProcInter {
     map.put("startNum", startNum);
     map.put("endNum", endNum);
 
-    ArrayList<ContentsbdVO> list = contentsbdDAO.list_by_boardgrpno_search_paging(map);
+    ArrayList<ContentsbdVO> list = contentsbdDAO.list_all_by_boardgrpno_search_paging(map);
 
     return list;
   }
