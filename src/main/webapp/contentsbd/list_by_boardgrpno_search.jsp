@@ -74,7 +74,7 @@
           <DIV style='width: 30%; float: left; margin: 0.5%; padding: 0.5%;'>        
             <c:choose>
               <c:when test="${fname.endsWith('jpg') || fname.endsWith('png') || fname.endsWith('gif')}">
-                <a href="./read.do?contentsbdno=${contentsbdno}">
+                <a href="./read.do?contentsbdno=${contentsbdno}&nowPage=${nowPage}">
                 <IMG class="fadding-photo" src="./storage/${contentsbdVO.fname }" 
                      style='width: 75%; height: 400px;'></a><br>              
               </c:when>
@@ -90,7 +90,7 @@
            <IMG src='./images/heart_w.png' style='width: 14px;'>
            <span style='font-size: 0.84em; color: red;'>${contentsbdVO.recom }</span>     
            <br>     
-           <button type='button' onclick="location.href='./read.do?contentsbdno=${contentsbdno}&nowPage=${param.nowPage}'" class="btn">더보기</button>                   
+           <button type='button' onclick="location.href='./read.do?contentsbdno=${contentsbdno}&nowPage=${nowPage}'" class="btn">더보기</button>                   
            <button type='button' onclick="location.href=''" class="btn">예매하기</button>             
            <br> 
             <c:if test="${sessionScope.id_admins != null}">

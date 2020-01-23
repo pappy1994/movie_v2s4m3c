@@ -109,7 +109,7 @@ public interface ContentsbdDAOInter {
   /**
    * <xmp>
    * 검색 + 페이징 목록
-   * <select id="list_by_boardgrpno_search_paging" resultType="ContentsVO" parameterType="HashMap">
+   * <select id="list_all_by_boardgrpno_search_paging" resultType="ContentsVO" parameterType="HashMap">
    * </xmp>
    * @param map
    * @return

@@ -113,7 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          WHERE boardgrpno = #{boardgrpno} AND word LIKE '%' || #{word} || '%'
        </otherwise>
      </choose>
-     ORDER BY contentsbdno DESC   
+     ORDER BY mbook DESC   
    </select>
    
    <!-- 카테고리별 검색 레코드 갯수 -->
@@ -131,7 +131,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </select>    
 
    <!-- 카테고리별 검색 목록 + 페이징 -->
-   <select id="list_by_boardgrpno_search_paging"
+   <select id="list_all_by_boardgrpno_search_paging"
            resultType="ContentsbdVO" parameterType="HashMap">
      SELECT contentsbdno, 
             mno, boardgrpno, title, content, 
@@ -151,15 +151,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                          seqnobd, fname, fupname, thumb, fsize, 
                          director, actor, runtime, genre, youtube
                   FROM contentsbd
-                  <choose>
-                    <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
-                      WHERE boardgrpno=#{boardgrpno}
-                    </when>
-                    <otherwise>
-                      WHERE boardgrpno=#{boardgrpno} AND word LIKE '%' || #{word} || '%'
-                    </otherwise>
-                  </choose>
-                  ORDER BY contentsbdno DESC
+                  ORDER BY mbook DESC
                 )  
             ) 
             WHERE r&gt;=#{startNum} AND r&lt;=#{endNum}

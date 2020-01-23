@@ -137,7 +137,10 @@ public class ContentsbdCont {
      * @return
      */
     @RequestMapping(value = "/contentsbd/list.do", method = RequestMethod.GET)
-    public ModelAndView list_by_boardgrpno_search(int boardgrpno, String word) {
+    public ModelAndView list_by_boardgrpno_search
+    (@RequestParam(value="nowPage", defaultValue="1") int nowPage,
+                                                      String word,
+                                                      int boardgrpno) {
       ModelAndView mav = new ModelAndView();
 
       HashMap<String, Object> hashMap = new HashMap<>();
@@ -153,7 +156,11 @@ public class ContentsbdCont {
 
       BoardgrpVO boardgrpVO = boardgrpProc.read(boardgrpno);
       mav.addObject("boardgrpVO", boardgrpVO);
-
+     
+      String paging = contentsbdProc.pagingBox("list_all.do", boardgrpno, search_count, nowPage, word);
+      mav.addObject("paging", paging);  
+      mav.addObject("nowPage", nowPage);
+      
       mav.setViewName("/contentsbd/list_by_boardgrpno_search"); // 카테고리 그룹별 목록
 
       return mav;
