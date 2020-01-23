@@ -105,9 +105,9 @@ public class AttachbdCont {
     
     ra.addAttribute("upload_count", upload_count);
     ra.addAttribute("boardgrpno", boardgrpno);
-    ra.addAttribute("contentsbdno", attachbdVO.getContentsbdno());
     ra.addAttribute("nowPage", nowPage);
-    
+    ra.addAttribute("contentsbdno", attachbdVO.getContentsbdno());
+ 
     mav.setViewName("redirect:/attachbd/create_msg.jsp");
     return mav;
   }
@@ -138,7 +138,7 @@ public class AttachbdCont {
    * @return
    */
   @RequestMapping(value = "/attachbd/delete_by_contentsbdno.do", 
-                             method = RequestMethod.POST)
+                  method = RequestMethod.POST)
   public ModelAndView delete_by_contentsbdno(RedirectAttributes ra,
                                              int contentsbdno,
                                              int boardgrpno,

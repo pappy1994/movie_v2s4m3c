@@ -285,6 +285,7 @@ public class ContentsbdCont {
       ra.addAttribute("boardgrpno", contentsbdVO.getBoardgrpno());
       ra.addAttribute("contentsbdno", contentsbdVO.getContentsbdno());
       ra.addAttribute("nowPage", nowPage);
+      
       mav.setViewName("redirect:/contentsbd/update_msg.jsp");
 
       return mav;
@@ -326,7 +327,8 @@ public class ContentsbdCont {
      * @param contentsbdno
      * @return
      */
-    @RequestMapping(value = "/contentsbd/delete.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/contentsbd/delete.do", 
+                    method = RequestMethod.POST)
     public ModelAndView delete(HttpSession session,
                                RedirectAttributes ra,
                                int boardgrpno, 
@@ -344,7 +346,7 @@ public class ContentsbdCont {
           
           // -------------------------------------------------------------------------------------
              // 마지막 페이지의 레코드 삭제시의 페이지 번호 -1 처리
-             HashMap<String, Object> map = new HashMap<String, Object>();
+            HashMap<String, Object> map = new HashMap<String, Object>();
              map.put("boardgrpno", boardgrpno);
              map.put("word", word);
              if (contentsbdProc.search_count(map) % Contents.RECORD_PER_PAGE == 0) {

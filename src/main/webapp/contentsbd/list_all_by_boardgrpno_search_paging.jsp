@@ -63,12 +63,14 @@
             <span style='font-size: 0.78em;'>${contentsbdVO.mopen} 개봉</span><br>
             <IMG src='./images/heart_w.png' style='width: 20px;'><span style='color: red'>${contentsbdVO.recom}</span>     
             <br>     
-            <button type='button' onclick="location.href='./read.do?contentsbdno=${contentsbdno}&nowPage=${nowPage}'" class="btn">더보기</button>                   
+            <button type='button' onclick="location.href='./read.do?contentsbdno=${contentsbdno}&nowPage=${param.nowPage}'" class="btn">더보기</button>                   
             <button type='button' onclick="location.href=''" class="btn">예매하기</button>             <br>
           </DIV>
        </c:forEach>
+       
         <div class='bottom_menu'>${paging }</div>    
         <br><br>
+      
       </DIV>
  
 <jsp:include page="/menu/bottom.jsp" flush='false' />
