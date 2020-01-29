@@ -24,7 +24,7 @@
         <A class='menu_link'  href='${root}/contentsmv/list.do?customgrpno=1'>공지사항</A><span class='top_menu1'> | </span>    
         <A class='menu_link'  href='${root}/boardgrp/list.do'>영화</A> <span class='top_menu1'> | </span>    
         <A class='menu_link'  href='${root}/members/list.do'>회원목록</A> <span class='top_menu1'> | </span>  
-        [
+        
       <c:choose>
         <c:when test="${sessionScope.id_admins == null}">
           <A class='menu_link'  href='${root}/admins/login.do' >관리자 Login</A>
@@ -33,7 +33,7 @@
           ${sessionScope.id_admins } <A class='menu_link'  href='${root}/admins/logout.do' >관리자 Logout</A> 
         </c:otherwise>
       </c:choose>
-      ]
+      
           
     </NAV>
   </DIV>
@@ -41,7 +41,7 @@
   <!-- 화면을 2개로 분할하여 좌측은 메뉴, 우측은 내용으로 구성 -->  
   <DIV class="row" style='margin-top: 2px;'>
     <DIV class="col-md-2"> <!-- 메뉴 출력 컬럼 -->      
-      <div style='margin-top: 5px;'>
+      <%-- <div style='margin-top: 5px;'>
         <c:choose>
           <c:when test="${sessionScope.id == null}">           
             <form name='frm' method='POST' action='${root }/members/login.do'>
@@ -50,11 +50,11 @@
               <input type='text' class="form-control input-lg" name='id' id='id' 
                         value='${ck_id }' required="required" 
                         style='width: 80%;' placeholder="아이디" autofocus="autofocus">
-                <%-- <div class="form-group">
+                <div class="form-group">
                     <label class="form-check-label">
                     <input type="checkbox" name='id_save' value='Y' 
                                        ${ck_id_save == 'Y' ? "checked='checked'" : "" }>저장</label>
-                </div> --%>
+                </div>
                </div>
               <div class="form-group">
                 <label for="inputPassword">패스워드</label>
@@ -64,14 +64,17 @@
             <button type="submit" class="btn btn-primary btn-md">로그인</button>
             <button type="butoon" onclick="location.href='${root}/members/create.do'"class="btn btn-primary btn-md">회원 가입</button>
            </form>
-          </c:when>
-            <c:otherwise>
+          </c:when>             
+            <c:otherwise> 
+            </div>
+            --%>
+            
+            <c:if test="${sessionScope.id != null }">
                ${sessionScope.id }님<br>로그인을 환영합니다.<Br>
                <button type='button' onclick="location.href='${root}/members/logout.do'" class="btn btn-primary btn-md">로그아웃</button><span class='top_menu1'> | </span>
                <button type='button' onclick="location.href='${root}/members/read.do?mno=${sessionScope.mno }'" class="btn btn-primary btn-md">마이페이지</button>        
-            </c:otherwise>
-        </c:choose>   
-      </div>
+            </c:if>    
+      
       <br>
        ★ <A href='${root}/contentsmv/list.do?customgrpno=1'>공지사항</A>★<br><br>
        ★ <A href='${root}/contentsmv/list_all.do'>전체글</A>
