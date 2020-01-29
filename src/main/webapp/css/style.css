@@ -218,10 +218,10 @@
     
   /* Top 메뉴의 시작 -------------------------- */  
   .top_menu {
-    background: url('./images/hi.jpg');
+    background: url('./images/mv.jpg');
     margin-top: 0px;
     width: 100%;
-    height: 70px;  
+    height: 250px;  
   }
 
   .top_menu1 {
@@ -230,17 +230,21 @@
   
   .top_menu_label {
     position: relative; /* 속해있는 부모 태그 기준 설정 */
-    top: 1%;
-    left: 0.5%;
-    color: #FFFFFF;
+    top: 45%;
+    left: 54%;
+    color: #0000ff;
+    font-weight: bold;
+    font-size:large;
   }
     
   .top_menu_list {
     padding-top: 0.0em;
+    font-size : large;
     position: relative;
-    top: 30%;
-    left: 0%;
-    background-color: rgba(50, 50, 255, 0.3); /* 0.8: Alpha 투명도 */
+    top: 75%;
+    left: 30%;
+    font-weight: bold;
+    /* background-color:  0.8: Alpha 투명도 */
     color: white;
   }
   
@@ -494,5 +498,6 @@
   color : black;
   }
   
+ 
 
   

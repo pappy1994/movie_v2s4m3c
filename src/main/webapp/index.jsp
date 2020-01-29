@@ -15,22 +15,18 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    
+ 
 </head>
 <body>
 <jsp:include page="/menu/top.jsp" flush='false' />
-  <DIV style='margin-right: 300px;'>  
+
+<DIV style='margin-right: 300px;'>  
   <br>
   <iframe src='./fotorama/movie.html' style='width: 100%; height: 580px; border: none;'></iframe>
   <br> 
-</DIV>
+</DIV>  
   
-  <DIV style='margin: 0px auto; width: 400px;'>
-</DIV>
-  
-  <DIV style='margin: 0px auto; width: 90%;'>
-    <DIV style='float: left; width: 50%;'>
-     </DIV>
+  <DIV style='margin: 0px auto; width: 90%;'>    
      <DIV style='float: left; width: 50%;'>
     </DIV>  
   </DIV>
