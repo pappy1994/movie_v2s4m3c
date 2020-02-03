@@ -200,7 +200,7 @@ SELECT contentsbdno, mno, boardgrpno, title, content,
            seqnobd, fname, fupname, thumb, fsize,
            director, actor, runtime, genre, youtube
 FROM contentsbd
-WHERE contentsbdno=1;
+WHERE contentsbdno=18;
 
 -- 6) 수정
 UPDATE contentsbd
@@ -218,7 +218,7 @@ ORDER BY mbook DESC
 
 -- 7) 삭제
 DELETE FROM contentsbd
-WHERE contentsbdno=1;
+WHERE contentsbdno=18;
 
 -- 8) FK 부모 테이블별 레코드 개수 산출
 SELECT contentsbdno, mno, boardgrpno, title
@@ -253,6 +253,86 @@ UPDATE contentsbd
 SET recom = recom + 1
 WHERE contentsbdno = 1;
 
+13) 검색
+① boardgrp 검색 목록
+SELECT contentsbdno, 
+            mno, boardgrpno, title, content, 
+            recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
+            seqnobd, fname, fupname, thumb, fsize, 
+            director, actor, runtime, genre, youtube
+FROM contentsbd
+WHERE boardgrpno=2 AND word LIKE '%스위스%'
+ORDER BY contentsbdno DESC;
 
+SELECT contentsbdno, 
+            mno, boardgrpno, title, content, 
+            recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
+            seqnobd, fname, fupname, thumb, fsize, 
+            director, actor, runtime, genre, youtube
+FROM contentsbd
+WHERE boardgrpno=2 AND word LIKE '%스의스%'
+ORDER BY contentsbdno DESC;
+
+SELECT contentsbdno, 
+            mno, boardgrpno, title, content, 
+            recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
+            seqnobd, fname, fupname, thumb, fsize, 
+            director, actor, runtime, genre, youtube
+FROM contentsbd
+WHERE boardgrpno=2 AND word LIKE '%수의스%'
+ORDER BY contentsbdno DESC;
+
+SELECT contentsbdno, 
+            mno, boardgrpno, title, content, 
+            recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
+            seqnobd, fname, fupname, thumb, fsize, 
+            director, actor, runtime, genre, youtube
+FROM contentsbd
+WHERE boardgrpno=2 AND word LIKE '%swiss%'
+ORDER BY contentsbdno DESC;
+
+SELECT contentsbdno, 
+            mno, boardgrpno, title, content, 
+            recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
+            seqnobd, fname, fupname, thumb, fsize, 
+            director, actor, runtime, genre, youtube
+FROM contentsbd
+WHERE boardgrpno=2 AND word LIKE '%유럽%'
+ORDER BY contentsbdno DESC;
+
+② 검색 레코드 갯수
+-- 전체 레코드 갯수
+SELECT COUNT(*) as cnt
+FROM contentsbd
+WHERE boardgrpno=2;
+
+-- 검색 레코드 갯수
+SELECT COUNT(*) as cnt
+FROM contentsbd
+WHERE boardgrpno=2 AND word LIKE '%스위스%';
+
+-- 페이징    
+SELECT contentsbdno, 
+            mno, boardgrpno, title, content, 
+            recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
+            seqnobd, fname, fupname, thumb, fsize, 
+            director, actor, runtime, genre, youtube, r
+FROM (
+        SELECT contentsbdno, 
+                  mno, boardgrpno, title, content, 
+                  recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
+                  seqnobd, fname, fupname, thumb, fsize, 
+                  director, actor, runtime, genre, youtube, rownum as r
+        FROM (
+                  SELECT contentsbdno, 
+                         mno, boardgrpno, title, content, 
+                         recom, cnt, replycnt, rdate, word, mage, mopen, mbook, 
+                         seqnobd, fname, fupname, thumb, fsize, 
+                         director, actor, runtime, genre, youtube
+                  FROM contentsbd
+                  ORDER BY mbook DESC
+              )
+)
+WHERE r>=1 AND r<=3;
 
 
