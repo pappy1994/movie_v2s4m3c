@@ -319,25 +319,24 @@ function list_movie_time_select(movie_timeno) {
   <table class='table-reserve'>
     <thead class='th_reserve_check'>
       <TR>
-        <th id='select_movie'>영화 선택</th>
+        <th style="color:#ffff00;"id='select_movie'>영화 선택</th>
         <td></td>
       </tr>
       <tr>
-        <th id='select_theater2'>극장 선택</th> 
+        <th style="color:#ffff00;" id='select_theater2'>극장 선택</th> 
         <td></td>
       </tr>
       <tr>
-        <td id='select_mtime'>시간 선택</td>
+        <td style="color:#ffff00;" id='select_mtime'>시간 선택</td>
         <td></td>
       </tr>
       <tr>
-        <th id='panel1'>좌석 선택</th>
+        <th style="color:#ffff00;" id='panel1'>좌석 선택</th>
         <td></td>
       </tr>
       <tr>
-        <th></th>
+        <th><div id='panel2'></div></th>
         <td>
-          <div id='panel2'></div>
         </td>
       </tr>
     </thead>
