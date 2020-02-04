@@ -527,7 +527,26 @@ public class ContentsbdCont {
       return obj.toString();
     }
 
-  
+    /**
+     * http://localhost:9090/team7/contentsbd/read_json.do?contentsbdno=1
+     * {"youtube":"À¯Æ©ºê ÁÖ¼Ò","mage":"ÀüÃ¼ÀÌ¿ë°¡","fname":"samyang.jpg","mopen":"19.11.21","thumb":"samyang_t.jpg","director":"´«»ç¶÷","boardgrpno":1,"cnt":0,"runtime":105,"title":"°Ü¿ï¿Õ±¹2","fupname":"samyang_1.jpg","content":"³»¿ë1","mno":1,"seqnobd":1,"actor":"´«, ´«µ¢ÀÌ","fsize":1000,"rdate":"2020-01-15 14:43:30","mbook":61.7,"genre":"·Î¸Ç½º","contentsbdno":1,"recom":0,"replycnt":0}
+     * @param contentsbdno
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/contentsbd/read_json.do",
+                                method = RequestMethod.GET,
+                                produces = "text/plain;charset=UTF-8")
+    public String read_json(int contentsbdno) {
+      // String msg="JSON Ãâ·Â";
+      // return msg;
+      
+      ContentsbdVO contentsbdVO = contentsbdProc.read(contentsbdno);
+      
+      JSONObject obj = new JSONObject(contentsbdVO);
+
+      return obj.toString();     
+    }
   
   
   
