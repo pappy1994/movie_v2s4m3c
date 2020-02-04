@@ -3,7 +3,7 @@
 DROP TABLE contents;
 DROP TABLE members;
 -- 제약 조건과 함께 삭제(제약 조건이 있어도 삭제됨, 권장하지 않음.)
-DROP TABLE memberss CASCADE CONSTRAINTS; 
+DROP TABLE members CASCADE CONSTRAINTS; 
  
 CREATE TABLE members(
   mno NUMBER(6) NOT NULL, -- 회원 번호, 레코드를 구분하는 컬럼 

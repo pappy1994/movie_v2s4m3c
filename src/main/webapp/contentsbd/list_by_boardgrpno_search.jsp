@@ -91,7 +91,7 @@
            <span style='font-size: 0.84em; color: red;'>${contentsbdVO.recom }</span>     
            <br>     
            <button type='button' onclick="location.href='./read.do?contentsbdno=${contentsbdno}&nowPage=${nowPage}'" class="btn">더보기</button>                   
-           <button type='button' onclick="location.href=''" class="btn">예매하기</button>             
+           <button type='button' onclick="location.href='../reserve/list.do'" class="btn">예매하기</button>             
            <br> 
             <c:if test="${sessionScope.id_admins != null}">
               <a href="./update.do?contentsbdno=${contentsbdno}&boardgrpno=${boardgrpVO.boardgrpno}&nowPage=${param.nowPage}"><span style='font-size: 0.9em;'>수정</span></a>

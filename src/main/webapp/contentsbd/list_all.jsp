@@ -64,7 +64,7 @@
             <IMG src='./images/heart_w.png' style='width: 20px;'><span style='color: red'>${contentsbdVO.recom}</span>     
             <br>     
             <button type='button' onclick="location.href='./read.do?contentsbdno=${contentsbdno}'" class="btn">더보기</button>                   
-            <button type='button' onclick="location.href=''" class="btn">예매하기</button>             <br>
+            <button type='button' onclick="location.href='../reserve/list.do'" class="btn">예매하기</button>             <br>
           </DIV>
        </c:forEach>
       </DIV>
