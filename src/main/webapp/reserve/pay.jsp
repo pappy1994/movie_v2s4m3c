@@ -23,8 +23,6 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
-<script type="text/javascript" src="./tool.js"></script>
-
 <script type="text/javascript">
 var IMP = window.IMP; // 생략가능
 IMP.init('imp15649723'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용 

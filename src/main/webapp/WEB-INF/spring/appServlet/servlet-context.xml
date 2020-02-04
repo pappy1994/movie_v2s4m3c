@@ -33,11 +33,7 @@
   <context:component-scan base-package="dev.mvc.contentsbd" /> <!-- anne -->
   <context:component-scan base-package="dev.mvc.contentsmv" /> <!-- anne -->
   <context:component-scan base-package="dev.mvc.customgrp" /> <!-- anne -->
-  <context:component-scan base-package="dev.mvc.econtents" /> <!-- anne -->
-  <context:component-scan base-package="dev.mvc.eventgrp" /> <!-- anne -->
   <context:component-scan base-package="dev.mvc.members" /> <!-- anne -->
-  <context:component-scan base-package="dev.mvc.qna" /> <!-- anne -->
-  <context:component-scan base-package="dev.mvc.qnagrp" /> <!-- anne -->
   <context:component-scan base-package="dev.mvc.rpl" /> <!-- anne -->
   
   <beans:bean id="multipartResolver"
