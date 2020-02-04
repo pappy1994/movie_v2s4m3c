@@ -2,6 +2,8 @@ package dev.mvc.reserve;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import dev.mvc.area.AreaProcInter;
 import dev.mvc.area.AreaVO;
 import dev.mvc.contentsbd.ContentsbdProcInter;
 import dev.mvc.contentsbd.ContentsbdVO;
+import dev.mvc.members.MembersProcInter;
 import dev.mvc.movie_time.Movie_timeProcInter;
 import dev.mvc.movie_time.Movie_timeVO;
 import dev.mvc.theater.TheaterProcInter;
@@ -40,15 +43,21 @@ public class ReserveCont {
   @Qualifier("dev.mvc.movie_time.Movie_timeProc")
   private Movie_timeProcInter movie_timeProc;
   
+  @Autowired
+  @Qualifier("dev.mvc.members.MembersProc") // 이름 지정
+  private MembersProcInter membersProc;
   
   public ReserveCont() {
     System.out.println("--> ReserveCont created");
   }
 
   @RequestMapping(value = "/reserve/list.do", method = RequestMethod.GET)
-  public ModelAndView list() {
+  public ModelAndView list(HttpSession session) {
     ModelAndView mav = new ModelAndView();
-
+    
+    if (membersProc.isMembers(session) == false) {
+      mav.setViewName("redirect:/members/login_need.jsp"); // /webapp/member/login_need.jsp
+    } else {
     List<ContentsbdVO> list_movie = contentsbdProc.list_all();
     mav.addObject("list_movie", list_movie);
     
@@ -63,7 +72,7 @@ public class ReserveCont {
     
     
     mav.setViewName("/reserve/list");// /webapp/categrp/list.jsp
-
+    }
     return mav;
   }
   

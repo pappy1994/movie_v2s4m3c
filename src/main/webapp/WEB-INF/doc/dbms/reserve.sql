@@ -125,10 +125,12 @@ CREATE TABLE RESERVEGRP(
     theaterno                         NUMBER(10)     NOT NULL,
     movie_timeno                      NUMBER(10)     NOT NULL,
     contentsbdno                      NUMBER(10)     NOT NULL,
+    mno                         NUMBER(10)     NOT NULL,
     FOREIGN KEY (areano) REFERENCES areagrp (areano),
     FOREIGN KEY (theaterno) REFERENCES theatergrp (theaterno),
     FOREIGN KEY (movie_timeno) REFERENCES movie_time (movie_timeno),
-    FOREIGN KEY (contentsbdno) REFERENCES contentsbd (contentsbdno)
+    FOREIGN KEY (contentsbdno) REFERENCES contentsbd (contentsbdno),
+    FOREIGN KEY (mno) REFERENCES members (mno)
 );
 
 DROP TABLE reservegrp;
