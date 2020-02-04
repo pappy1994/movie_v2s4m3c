@@ -28,17 +28,17 @@
     <!-- 아래부분은 매핑할 xml파일이 있는 패키지경로를 설정한다. -->
     <property name="typeAliasesPackage" 
                    value="dev.mvc.admins,
+                            dev.mvc.area,
                             dev.mvc.attachbd,
                             dev.mvc.boardgrp,
                             dev.mvc.contentsbd,
                             dev.mvc.contentsmv,
                             dev.mvc.customgrp,
                             dev.mvc.members,
-                            dev.mvc.rpl,
-                            dev.mvc.area,
-                            dev.mvc.reserve,
                             dev.mvc.movie_time,
-                            dev.mvc.theater,
+                            dev.mvc.reserve,
+                            dev.mvc.rpl,
+                            dev.mvc.theater
                             "  />
     <!-- /src/main/resources/mybatis  -->
     <property name="mapperLocations" value="classpath:mybatis/*.xml" />
