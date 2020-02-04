@@ -18,12 +18,15 @@
         <c:otherwise>
           ${sessionScope.id } <A class='menu_link'  href='${root}/members/logout.do' >Logout</A> <span class='top_menu1'> | </span>
         </c:otherwise>
-      </c:choose>
-        
-        <A class='menu_link'  href='${root}/customgrp/list.do'>카테고리 그룹</A> <span class='top_menu1'> | </span>            
+      </c:choose>        
+                    
         <A class='menu_link'  href='${root}/contentsmv/list.do?customgrpno=1'>공지사항</A><span class='top_menu1'> | </span>    
-        <A class='menu_link'  href='${root}/boardgrp/list.do'>영화</A> <span class='top_menu1'> | </span>    
-        <A class='menu_link'  href='${root}/members/list.do'>회원목록</A> <span class='top_menu1'> | </span>  
+        <A class='menu_link'  href='${root}/contentsbd/list.do?boardgrpno=1'>박스오피스</A> <span class='top_menu1'> | </span>
+        <A class='menu_link'  href='${root}/contentsbd/list.do?boardgrpno=2'>상영예정작</A> <span class='top_menu1'> | </span>    
+        <A class='menu_link'  href='${root}/reserve/list.do'>영화 예매</A> <span class='top_menu1'> | </span>    
+        
+            
+        
         
       <c:choose>
         <c:when test="${sessionScope.id_admins == null}">
@@ -76,9 +79,10 @@
             </c:if>    
       
       <br>
-       ★ <A href='${root}/contentsmv/list.do?customgrpno=1'>공지사항</A>★<br><br>
-       ★ <A href='${root}/contentsmv/list_all.do'>전체글</A>
-       
+       ★ <A href='${root}/contentsmv/list.do?customgrpno=1'>공지사항</A> ★<br><br>
+       ★ <A href='${root}/contentsmv/list_all.do'>전체글</A> ★ <br><br>
+       ★ <A href='${root}/contentsbd/list.do?boardgrpno=1'>박스오피스</A> ★ <br><br>
+       ★ <A href='${root}/reserve/list.do'>영화 예매</A> ★ <br><br>       
     </div>
       
     <DIV class="col-md-10 cont">  <!-- 내용 출력 컬럼 -->  
