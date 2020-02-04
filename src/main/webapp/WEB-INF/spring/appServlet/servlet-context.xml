@@ -23,6 +23,10 @@
   </beans:bean>
   
   <context:component-scan base-package="dev.mvc.movie" />
+    <context:component-scan base-package="dev.mvc.area" /> <!-- 지역 -->
+  <context:component-scan base-package="dev.mvc.theater" /> <!-- 극장 -->
+  <context:component-scan base-package="dev.mvc.reserve" /> <!-- 메인 -->
+  <context:component-scan base-package="dev.mvc.movie_time" /> <!-- 시간 -->
   <context:component-scan base-package="dev.mvc.admins" /> <!-- anne -->
   <context:component-scan base-package="dev.mvc.attachbd" /> <!-- anne -->
   <context:component-scan base-package="dev.mvc.boardgrp" /> <!-- anne -->

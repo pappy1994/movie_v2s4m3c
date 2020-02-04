@@ -38,7 +38,12 @@
                             dev.mvc.members,
                             dev.mvc.qna,
                             dev.mvc.qnagrp,
-                            dev.mvc.rpl"  />
+                            dev.mvc.rpl,
+                            dev.mvc.area,
+                            dev.mvc.reserve,
+                            dev.mvc.movie_time,
+                            dev.mvc.theater,
+                            "  />
     <!-- /src/main/resources/mybatis  -->
     <property name="mapperLocations" value="classpath:mybatis/*.xml" />
   </bean>
