@@ -91,9 +91,9 @@ function list_theater_select(areano) {
         for (i=0; i < rdata.list_theater_select.length; i++) {
           var row = rdata.list_theater_select[i];
             
-          msg += " <li><A href='javascript:list_theater_select2("+row.theaterno+")'>";
+          msg += " <ul><li><A href='javascript:list_theater_select2("+row.theaterno+")'>";
           msg += row.theater
-          msg += "</A></li>";
+          msg += "</A></li></ul>";
         }
         // alert(msg);
         $('#select_theater').append(msg);
@@ -193,6 +193,29 @@ function list_movie_time_select(movie_timeno) {
           altField: "#test"
         });
   });
+  
+ /* 좌석 선택 */
+  $(document).ready(function() {
+    // 체크박스들이 변경됬을때
+    $(":checkbox").change(function() {
+      var cnt = $("#person").val();
+
+      // 셀렉트박스의 값과 체크박스중 체크된 갯수가 같을때, 다른 체크박스들을 disable 처리
+      if (cnt == $(":checkbox:checked").length) {
+        $(":checkbox:not(:checked)").attr("disabled", "disabled");
+      }
+      // 체크된 갯수가 다르면 활성화 시킴
+      else {
+        $(":checkbox").removeAttr("disabled");
+      }
+    });
+
+    // 셀렉트박스에서 다른 인원수를 선택하면 초기화 시킴
+    $("#person").change(function() {
+      $(":checkbox").removeAttr("checked");
+      $(":checkbox").removeAttr("disabled");
+    });
+  });
 </script>
 
 </head>
@@ -273,7 +296,7 @@ function list_movie_time_select(movie_timeno) {
 <!--               <li class='li_none'>좌석: <input type='text' name='seat' value='' required="required"> 열
               </li> -->
               
-              <li class='li_none'>인원: <input type='number' name='cnt' value='' step='1' min='1' max='10'> 명
+              <li class='li_none'>인원: <input type='number' id='person' name='cnt' value='' step='1' min='1' max='10'> 명
               </li>
               <li class="li_none">좌석 선택</li>
                 <li style='text-align: center;' class="li_none">스크린</li>
