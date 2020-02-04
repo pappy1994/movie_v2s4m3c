@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.mvc.theater.TheaterDAOInter">
+
+  <insert id="create" parameterType="TheaterVO">
+    INSERT INTO theatergrp(theaterno, areano, theater)
+    VALUES((SELECT NVL(MAX(theaterno), 0) + 1 as theaterno FROM theatergrp),
+                #{areano}, #{theater})
+  </insert>
+  
+  <select id="list" resultType="TheaterVO" >
+    SELECT theaterno , theater
+    FROM theatergrp
+    ORDER BY theaterno ASC
+  </select>
+  
+  <select id="theater_list_areano" resultType="TheaterVO" parameterType="int">
+    SELECT theaterno , areano, theater
+    FROM theatergrp
+    WHERE areano = #{areano}
+    ORDER BY theaterno ASC
+  </select>
+  
+  <select id="read" resultType="TheaterVO" parameterType="int">
+    SELECT theaterno, theater
+    FROM theatergrp
+    WHERE theaterno = #{theaterno}
+  </select> 
+  
+  <update id="update" parameterType="TheaterVO">
+    UPDATE theatergrp
+    SET theater=#{theater}
+    WHERE theaterno = #{theaterno}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM theatergrp
+    WHERE theaterno = #{theaterno}
+  </delete>
+
+</mapper> 

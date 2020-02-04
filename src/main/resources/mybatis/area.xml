@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.mvc.area.AreaDAOInter">
+
+  <insert id="create" parameterType="AreaVO">
+    INSERT INTO areagrp(areano, area, cnt)
+    VALUES((SELECT NVL(MAX(areano), 0) + 1 as areano FROM areagrp),
+                #{area}, #{cnt})
+  </insert>
+  
+  <select id="list" resultType="AreaVO" >
+    SELECT areano, area, cnt
+    FROM areagrp
+    ORDER BY areano ASC
+  </select>
+  
+  <select id="read" resultType="AreaVO" parameterType="int">
+    SELECT areano, area, cnt
+    FROM areagrp
+    WHERE areano = #{areano}
+  </select> 
+  
+  <update id="update" parameterType="AreaVO">
+    UPDATE areagrp
+    SET area=#{area}
+    WHERE areano = #{areano}
+  </update>
+
+  <update id="increaseCnt" parameterType="int">
+    UPDATE areagrp 
+    SET cnt = cnt + 1 
+    WHERE areano=#{areano}
+  </update>
+
+  <update id="decreaseCnt" parameterType="int">
+    UPDATE areagrp 
+    SET cnt = cnt - 1 
+    WHERE areano=#{areano}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM areagrp
+    WHERE areano = #{areano}
+  </delete>
+
+</mapper> 

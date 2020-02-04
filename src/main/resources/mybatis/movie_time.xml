@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.mvc.movie_time.Movie_timeDAOInter">
+
+  <insert id="create" parameterType="Movie_timeVO">
+    INSERT INTO movie_time(movie_timeno, seqno, mtime)
+    VALUES((SELECT NVL(MAX(movie_timeno), 0) + 1 as movie_timeno FROM movie_time),
+                #{seqno}, #{mtime})
+  </insert>
+  
+  <select id="list" resultType="Movie_timeVO" >
+    SELECT movie_timeno, seqno, mtime
+    FROM movie_time
+    ORDER BY movie_timeno ASC
+  </select>
+  
+  <select id="read" resultType="Movie_timeVO" parameterType="int">
+    SELECT movie_timeno, seqno, mtime
+    FROM movie_time
+    WHERE movie_timeno = #{movie_timeno}
+  </select> 
+  
+  <update id="update" parameterType="Movie_timeVO">
+    UPDATE movie_time
+    SET mtime=#{mtime}
+    WHERE movie_timeno = #{movie_timeno}
+  </update>
+
+  <!-- 우선순위 상향 up 10 -> 1 -->
+  <update id="update_seqno_up" parameterType="int">
+    UPDATE movie_time
+    SET seqno = seqno - 1
+   WHERE movie_timeno= #{movie_timeno}
+  </update>
+
+  <!-- 우선순위 하향 down 1 -> 10 -->
+  <update id="update_seqno_down" parameterType="int">
+    UPDATE movie_time
+    SET seqno = seqno + 1
+    WHERE movie_timeno= #{movie_timeno}
+  </update>
+
+  <select id="list_seqno_asc" resultType="Movie_timeVO">
+    SELECT movie_timeno, seqno, mtime
+    FROM movie_time
+    ORDER BY seqno ASC
+  </select> 
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM movie_time
+    WHERE movie_timeno = #{movie_timeno}
+  </delete>
+
+</mapper> 
