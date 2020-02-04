@@ -175,24 +175,24 @@ function list_movie_time_select(movie_timeno) {
 
 /* 날짜선택 */
 
-	$(function() {
-		$("#Datepicker").datepicker(
-				{
-					monthNames : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월',
-							'8월', '9월', '10월', '11월', '12월' ],
-					monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월',
-							'7월', '8월', '9월', '10월', '11월', '12월' ],
-					dayNames : [ '일', '월', '화', '수', '목', '금', '토' ],
-					dayNamesShort : [ '일', '월', '화', '수', '목', '금', '토' ],
-					dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
-					dateFormat : "yy년mm월dd일",
-					showMonthAfterYear: true,
-					yearSuffix: '년',
-					minDate : -0,
-					maxDate : "+3D",
-				  altField: "#test"
-				});
-	});
+  $(function() {
+    $("#Datepicker").datepicker(
+        {
+          monthNames : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월',
+              '8월', '9월', '10월', '11월', '12월' ],
+          monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월',
+              '7월', '8월', '9월', '10월', '11월', '12월' ],
+          dayNames : [ '일', '월', '화', '수', '목', '금', '토' ],
+          dayNamesShort : [ '일', '월', '화', '수', '목', '금', '토' ],
+          dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
+          dateFormat : "yy년mm월dd일",
+          showMonthAfterYear: true,
+          yearSuffix: '년',
+          minDate : -0,
+          maxDate : "+3D",
+          altField: "#test"
+        });
+  });
 </script>
 
 </head>
@@ -222,7 +222,7 @@ function list_movie_time_select(movie_timeno) {
     <tbody style="background-color: #e6e6e6;">
       <tr>
         <!-- 영화 -->
-        <td>
+        <td style= "border-right: solid 2px #ffffff;">
           <div>
           </div> 
           <c:forEach var="contentsbdVO" items="${list_movie }">
@@ -237,7 +237,7 @@ function list_movie_time_select(movie_timeno) {
         <!-- 영화 끝 -->
         
         <!-- 극장 -->
-        <td>
+        <td style= "border-right: solid 2px #ffffff;">
           <c:forEach var="areaVO" items="${list_area }">
             <c:set var="areano" value="${areaVO.areano }" />
             <ul>
@@ -249,13 +249,13 @@ function list_movie_time_select(movie_timeno) {
         <!-- 극장 끝-->
         
         <!-- 날짜 -->
-        <td>
+        <td style= "border-right: solid 2px #ffffff;">
           <input type="text" id="Datepicker" value="">
         </td>
         <!-- 날짜 끝-->
         
         <!-- 시간 시작 -->
-        <td>
+        <td style= "border-right: solid 2px #ffffff;">
         <c:forEach var="movie_timeVO" items="${list_movie_time }">
             <c:set var="movie_timeno" value="${movie_timeVO.movie_timeno }" />
             <ul>
