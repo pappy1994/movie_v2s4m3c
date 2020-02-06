@@ -78,7 +78,7 @@ function delete_form(areano) {
     <c:set var="areano" value="${areaVO.areano }" />
     <TR>
       <TD style='text-align: center;'>${areaVO.areano }</TD>
-      <TD style='text-align: center;'><a href="../theater_list_admins/theater_list_areano.do?areano=${areano }">${areaVO.area }</a>(${areaVO.cnt })</TD>
+      <TD style='text-align: center;'><a href="../theater_list_admins/list_by_areano_search_paging.do?areano=${areano }">${areaVO.area }</a>(${areaVO.cnt })</TD>
       <TD style='text-align: center;'>
         <A href="javascript: update_form(${areano });"><IMG src='./images/update.png' title='수정'></A>
         <A href="javascript: delete_form(${areano });"><IMG src='./images/delete.png' title='삭제'></A>

@@ -42,4 +42,57 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE theaterno = #{theaterno}
   </delete>
 
+  <!-- 카테고리별 검색 목록 -->
+  <select id="list_by_areano_search" resultType="TheaterVO" parameterType="HashMap">
+    SELECT theaterno, areano, theater
+    FROM theatergrp
+    <choose>
+      <when test="theater == null or theater == ''"> <!-- 검색하지 않는 경우 -->
+        WHERE areano=#{areano}
+      </when>
+      <otherwise>
+        WHERE areano=#{areano} AND theater LIKE '%' || #{theater} || '%'
+      </otherwise>
+    </choose>
+    ORDER BY theaterno DESC
+  </select>
+
+  <!-- 카테고리별 검색 레코드 갯수 -->
+  <select id="search_count" resultType="int" parameterType="HashMap">
+    SELECT COUNT(*) as cnt
+    FROM theatergrp
+    <choose>
+      <when test="theater == null or theater == ''">
+        WHERE areano=#{areano}
+      </when>
+      <otherwise>
+        WHERE areano=#{areano} AND theater LIKE '%' || #{theater} || '%'
+      </otherwise>
+    </choose>
+  </select>
+
+  <!-- 카테고리별 검색 목록 + 페이징 -->
+  <select id="list_by_areano_search_paging" resultType="TheaterVO" parameterType="HashMap">
+    SELECT theaterno, areano, theater, r
+    FROM (
+               SELECT theaterno, areano, theater, rownum as r
+               FROM (
+                         SELECT theaterno, areano, theater
+                         FROM theatergrp
+                         <choose>
+                           <when test="theater == null or theater == ''"> <!-- 검색하지 않는 경우 -->
+                             WHERE areano=#{areano}
+                           </when>
+                           <otherwise>
+                             WHERE areano=#{areano} AND theater LIKE '%' || #{theater} || '%'
+                           </otherwise>
+                         </choose>
+                         ORDER BY theaterno DESC
+               )
+    )
+    WHERE r &gt;= #{startNum} AND r &lt;= #{endNum}
+    <!-- 1 page: WHERE r >= 1 AND r <= 10; 2 page: WHERE r >= 11 AND r <= 
+      20; 3 page: WHERE r >= 21 AND r <= 30; -->
+  </select>
+
 </mapper> 

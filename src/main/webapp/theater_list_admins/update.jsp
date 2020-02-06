@@ -36,7 +36,9 @@
 <DIV class='title_line' style='width: 40%;'>지역 수정</DIV>
  
 <FORM name='frm' method='POST' action='./update.do'>
+<input type='hidden' name='areano' value='${areaVO.areano }'>
 <input type='hidden' name='theaterno' value='${theaterVO.theaterno }'>
+<input type='hidden' name='nowPage' value='${param.nowPage }'>
   <fieldset class='fieldset_basic'>
     <ul>
       <li class='li_none'>

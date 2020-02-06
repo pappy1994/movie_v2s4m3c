@@ -45,7 +45,7 @@ SELECT NVL(MAX(areano), 0) + 1 as areano FROM areagrp;
             
 INSERT INTO theatergrp(theaterno, areano, theater)
 VALUES((SELECT NVL(MAX(theaterno), 0) + 1 as theaterno FROM theatergrp),
-            1, '강남CGV');
+            1, '강남');
             
 SELECT areano FROM areagrp ORDER BY areano; 
             
@@ -78,7 +78,7 @@ SET area='대전'
 WHERE areano = 2;
 
 UPDATE theatergrp
-SET theater='종각CGV'
+SET theater='강남'
 WHERE theaterno = 1;
 
 -- 등록된 글수 증가,감소
@@ -100,3 +100,68 @@ WHERE theaterno = 1;
 -- FK 부모 테이블별 레코드 삭제
 DELETE FROM theatergrp
 WHERE areano=1;
+
+-- 검색
+SELECT theaterno, areano, theater
+FROM theatergrp
+WHERE areano=1 AND theater LIKE '%강남%'
+ORDER BY theaterno DESC;
+
+SELECT theaterno, areano, theater
+FROM theatergrp
+WHERE areano=1 AND theater LIKE '%겅남%'
+ORDER BY theaterno DESC;
+
+SELECT theaterno, areano, theater
+FROM theatergrp
+WHERE areano=1 AND theater LIKE '%걍남%'
+ORDER BY theaterno DESC;
+
+SELECT theaterno, areano, theater
+FROM theatergrp
+WHERE areano=1 AND theater LIKE '%가앙남%'
+ORDER BY theaterno DESC;
+
+SELECT theaterno, areano, theater
+FROM theatergrp
+WHERE areano=1 AND theater LIKE '%가남%'
+ORDER BY theaterno DESC;
+
+-- 전체 레코드 갯수
+SELECT COUNT(*) as cnt
+FROM theatergrp
+WHERE areano=1;
+
+-- 검색 레코드 갯수
+SELECT COUNT(*) as cnt
+FROM theatergrp
+WHERE areano=1 AND theater LIKE '%강남%';
+
+-- 페이징
+-- step 1
+SELECT theaterno, areano, theater
+FROM theatergrp
+WHERE areano=1 AND theater LIKE '%강남%'
+ORDER BY theaterno DESC;
+
+-- step 2
+SELECT theaterno, areano, theater, rownum as r
+FROM (
+          SELECT theaterno, areano, theater
+          FROM theatergrp
+          WHERE areano=1 AND theater LIKE '%강남%'
+          ORDER BY theaterno DESC
+);
+   
+-- step 3
+SELECT theaterno, areano, theater, r
+FROM (
+           SELECT theaterno, areano, theater, rownum as r
+           FROM (
+                     SELECT theaterno, areano, theater
+                     FROM theatergrp
+                     WHERE areano=1 AND theater LIKE '%강남%'
+                     ORDER BY theaterno DESC
+           )          
+)
+WHERE r >= 1 AND r <= 3;
